@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Plan - Berry Games</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --primary-dark: #5649c0;
+            --secondary: #00cec9;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --success: #00b894;
+            --danger: #d63031;
+            --warning: #fdcb6e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+        
+        .plan-selection {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .plan-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .plan-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .plan-subtitle {
+            font-size: 1.1rem;
+            color: #aaa;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .plan-grid {
+            display: flex;
+            flex-direction: row;
+            gap: 2rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+            justify-content: flex-start;
+            -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x mandatory;
+        }
+        
+        .plan-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            min-width: 280px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+            scroll-snap-align: center;
+        }
+        
+        .plan-card.popular {
+            border: 1px solid var(--secondary);
+            transform: scale(1.05);
+        }
+        
+        .plan-card.popular::before {
+            content: 'POPULAR';
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 0.25rem 2rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transform: rotate(45deg);
+        }
+        
+        .plan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            background: rgba(255,255,255,0.08);
+        }
+        
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .plan-price .period {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+        
+        .plan-features {
+            margin-bottom: 2rem;
+        }
+        
+        .plan-feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        
+        .plan-feature i {
+            color: var(--secondary);
+            margin-right: 0.5rem;
+        }
+        
+        .plan-btn {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .plan-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108,92,231,0.3);
+        }
+        
+        .plan-card.popular .plan-btn {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-content {
+            background-color: #1e1e1e;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: white;
+        }
+
+        .payment-instructions {
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+
+        .payment-number {
+            font-weight: bold;
+            color: var(--secondary);
+            font-size: 1.2em;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+
+        .payment-number:hover {
+            text-decoration: underline;
+        }
+
+        .upload-section {
+            margin-top: 20px;
+            border-top: 1px solid #444;
+            padding-top: 20px;
+        }
+
+        .upload-btn {
+            background-color: var(--secondary);
+            color: var(--dark);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .upload-btn:hover {
+            background-color: #00b5b2;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .preview {
+            margin-top: 10px;
+        }
+
+        .preview img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 3px solid rgba(0, 184, 148, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--success);
+            animation: spin 1s ease-in-out infinite;
+            display: none;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        @keyframes spin {
+            to { transform: translateY(-50%) rotate(360deg); }
+        }
+
+        .feedback-message {
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+
+        .success-message {
+            background-color: rgba(0, 184, 148, 0.1);
+            color: var(--success);
+        }
+
+        .error-message {
+            background-color: rgba(214, 48, 49, 0.1);
+            color: var(--danger);
+        }
+        
+        @media (max-width: 768px) {
+            .plan-grid {
+                justify-content: flex-start;
+            }
+            
+            .plan-card {
+                min-width: 280px;
+            }
+
+            .modal-content {
+                width: 90%;
+                padding: 20px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="plan-selection">
+        <div class="plan-header">
+            <h1 class="plan-title">Choose Your Plan</h1>
+            <p class="plan-subtitle">Select the membership that fits your gaming needs. Upgrade or downgrade anytime.</p>
+        </div>
+        <div class="plan-grid">
+            <div class="plan-card">
+                <div class="plan-name">Starter</div>
+                <div class="plan-price">0 RWF <span class="period">/month</span></div>
+                <div class="plan-features">
+                    <div class="plan-feature"><i>✓</i> Access to free games</div>
+                    <div class="plan-feature"><i>✓</i> Basic support</div>
+                    <div class="plan-feature"><i>✓</i> Limited downloads</div>
+                    <div class="plan-feature"><i>✓</i> Ads supported</div>
+                </div>
+                <button class="plan-btn" onclick="selectPlan('0')">Get Started</button>
+            </div>
+            
+            <div class="plan-card popular">
+                <div class="plan-name">Class A</div>
+                <div class="plan-price">1,500 RWF <span class="period">/month</span></div>
+                <div class="plan-features">
+                    <div class="plan-feature"><i>✓</i> 100+ premium games</div>
+                    <div class="plan-feature"><i>✓</i> Priority support</div>
+                    <div class="plan-feature"><i>✓</i> Unlimited downloads</div>
+                    <div class="plan-feature"><i>✓</i> No ads</div>
+                </div>
+                <button class="plan-btn" onclick="showPaymentModal('A', 1500)">Subscribe Now</button>
+            </div>
+            
+            <div class="plan-card">
+                <div class="plan-name">Class B</div>
+                <div class="plan-price">3,000 RWF <span class="period">/month</span></div>
+                <div class="plan-features">
+                    <div class="plan-feature"><i>✓</i> 200+ premium games</div>
+                    <div class="plan-feature"><i>✓</i> 24/7 support</div>
+                    <div class="plan-feature"><i>✓</i> Unlimited downloads</div>
+                    <div class="plan-feature"><i>✓</i> No ads</div>
+                </div>
+                <button class="plan-btn" onclick="showPaymentModal('B', 3000)">Subscribe Now</button>
+            </div>
+
+            <div class="plan-card">
+                <div class="plan-name">Class C</div>
+                <div class="plan-price">5,000 RWF <span class="period">/month</span></div>
+                <div class="plan-features">
+                    <div class="plan-feature"><i>✓</i> All premium games</div>
+                    <div class="plan-feature"><i>✓</i> VIP support</div>
+                    <div class="plan-feature"><i>✓</i> Unlimited downloads</div>
+                    <div class="plan-feature"><i>✓</i> No ads</div>
+                    <div class="plan-feature"><i>✓</i> Exclusive content</div>
+                </div>
+                <button class="plan-btn" onclick="showPaymentModal('C', 5000)">Subscribe Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="payment-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('payment-modal')">×</span>
+            <h2 id="modal-plan-name">Complete Payment</h2>
+            <div class="payment-instructions">
+                <p>To complete your subscription, please follow these steps:</p>
+                <ol>
+                    <li>Click to dial: <span id="payment-number" class="payment-number">*182*1*1*0795065789*1500#</span></li>
+                    <li>Complete the payment process</li>
+                    <li>Take a screenshot of the payment confirmation</li>
+                    <li>Upload the photo below as proof</li>
+                </ol>
+                <p>Your access will be activated after admin verification (usually within 24 hours).</p>
+            </div>
+            <div class="upload-section">
+                <h3>Upload Payment Proof</h3>
+                <div class="button-group">
+                    <input type="file" id="payment-proof" accept="image/*" style="display: none;">
+                    <button class="upload-btn" id="select-btn" onclick="document.getElementById('payment-proof').click()">Select Screenshot</button>
+                    <button class="upload-btn" id="submit-payment" style="display: none;" onclick="submitPayment()">Submit Proof <span class="spinner"></span></button>
+                </div>
+                <div class="preview" id="payment-preview"></div>
+                <div class="feedback-message" id="feedback-message"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Compatibility Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore-compat.js"></script>
+
+    <!-- Firebase Configuration and Logic -->
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyDANYS44qmTxUZb40SK50di8XHwaeOiPkM",
+            authDomain: "sub-ed-62348.firebaseapp.com",
+            projectId: "sub-ed-62348",
+            storageBucket: "sub-ed-62348.firebasestorage.app",
+            messagingSenderId: "133365566054",
+            appId: "1:133365566054:web:966a40fe8443d29aabfba7",
+            measurementId: "G-MYR2K02YPK"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        var db = firebase.firestore();
+        var auth = firebase.auth();
+
+        var currentUser = null;
+        var userEmail = null;
+
+        auth.onAuthStateChanged(function(user) {
+            if (user) {
+                currentUser = user;
+                userEmail = user.email; // Get the email from the authenticated user
+                console.log("User authenticated with email:", userEmail);
+            } else {
+                window.location.href = "sign.html"; // Redirect to login if not authenticated
+            }
+        });
+    </script>
+
+    <!-- Regular JavaScript -->
+    <script>
+        var currentPlan = null;
+        var currentAmount = 0;
+        var IMGBB_API_KEY = "b38c0efaadb9866bac80714d41369bad";
+
+        // Show feedback messages (success or error)
+        function showFeedback(message, type) {
+            var feedback = document.getElementById('feedback-message');
+            feedback.textContent = message;
+            feedback.className = 'feedback-message ' + (type === 'success' ? 'success-message' : 'error-message');
+            feedback.style.display = 'block';
+            setTimeout(function() {
+                feedback.style.display = 'none';
+            }, 5000);
+        }
+
+        // Toggle loading state on submit button
+        function showLoading(isLoading) {
+            var submitBtn = document.getElementById('submit-payment');
+            var spinner = submitBtn.querySelector('.spinner');
+            if (isLoading) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Saving...";
+                spinner.style.display = 'inline-block';
+            } else {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Submit Proof";
+                spinner.style.display = 'none';
+            }
+        }
+
+        // Handle free plan selection
+        function selectPlan(plan) {
+            if (plan === '0') {
+                if (!userEmail) {
+                    showFeedback("User not authenticated. Please log in again.", "error");
+                    return;
+                }
+                showLoading(true);
+                db.collection("users").doc(userEmail).set({
+                    email: userEmail,
+                    plan: "",
+                    paidClasses: "",
+                    paymentProof: []
+                }, { merge: true })
+                .then(function() {
+                    showFeedback("Free plan selected successfully!", "success");
+                    setTimeout(function() {
+                        window.location.href = "index.html";
+                    }, 2000);
+                })
+                .catch(function(error) {
+                    console.error("Error updating free plan:", error);
+                    showFeedback("Error selecting free plan: " + error.message, "error");
+                    showLoading(false);
+                });
+            }
+        }
+
+        // Show payment modal for paid plans
+        function showPaymentModal(plan, amount) {
+            currentPlan = plan;
+            currentAmount = amount;
+            
+            document.getElementById('modal-plan-name').textContent = "Complete Payment for Class " + plan;
+            var paymentNumber = "*182*1*1*0795065789*" + amount + "#";
+            var paymentNumberElement = document.getElementById('payment-number');
+            paymentNumberElement.textContent = paymentNumber;
+            
+            paymentNumberElement.onclick = function() {
+                window.location.href = "tel:" + paymentNumber;
+            };
+            
+            document.getElementById('payment-proof').value = '';
+            document.getElementById('payment-preview').innerHTML = '';
+            document.getElementById('submit-payment').style.display = 'none';
+            document.getElementById('feedback-message').style.display = 'none';
+            
+            document.getElementById('payment-proof').onchange = function(e) {
+                if (e.target.files.length > 0) {
+                    var file = e.target.files[0];
+                    if (!file.type.startsWith('image/')) {
+                        showFeedback("Please select an image file", "error");
+                        return;
+                    }
+                    var reader = new FileReader();
+                    
+                    reader.onload = function(event) {
+                        var preview = document.getElementById('payment-preview');
+                        preview.innerHTML = '<img src="' + event.target.result + '" alt="Payment proof">';
+                        document.getElementById('submit-payment').style.display = 'inline-block';
+                    };
+                    
+                    reader.onerror = function() {
+                        showFeedback("Error reading the image file", "error");
+                    };
+                    
+                    reader.readAsDataURL(file);
+                }
+            };
+            
+            openModal('payment-modal');
+        }
+
+        // Submit payment proof
+        function submitPayment() {
+            if (!userEmail) {
+                showFeedback("User not authenticated. Please log in again.", "error");
+                return;
+            }
+
+            var file = document.getElementById('payment-proof').files[0];
+            if (!file) {
+                showFeedback("Please select a payment proof photo first", "error");
+                return;
+            }
+
+            showLoading(true);
+
+            var formData = new FormData();
+            formData.append("image", file);
+            formData.append("key", IMGBB_API_KEY);
+
+            fetch("https://api.imgbb.com/1/upload", {
+                method: "POST",
+                body: formData
+            })
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok: " + response.statusText);
+                }
+                return response.json();
+            })
+            .then(function(data) {
+                if (data.success) {
+                    // Save the proof in Firestore under the user's email
+                    return db.collection("users").doc(userEmail).set({
+                        email: userEmail,
+                        paymentProof: firebase.firestore.FieldValue.arrayUnion({
+                            url: data.data.url,
+                            plan: currentPlan,
+                            amount: currentAmount,
+                            timestamp: new Date(),
+                            status: "pending"
+                        })
+                    }, { merge: true });
+                } else {
+                    throw new Error(data.error.message || "Failed to upload proof");
+                }
+            })
+            .then(function() {
+                showLoading(false);
+                showFeedback("Payment proof saved successfully! Waiting for admin verification.", "success");
+                setTimeout(function() {
+                    closeModal('payment-modal');
+                }, 2000);
+            })
+            .catch(function(error) {
+                console.error("Payment proof submission error:", error);
+                showLoading(false);
+                showFeedback("Error saving payment proof: " + error.message, "error");
+            });
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>

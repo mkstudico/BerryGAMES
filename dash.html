@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard | Berry Games</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6c5ce7;
+      --primary-hover: #5649c0;
+      --secondary: #00cec9;
+      --secondary-hover: #00b5b2;
+      --dark: #2d3436;
+      --light: #f5f6fa;
+      --success: #00b894;
+      --danger: #d63031;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: var(--dark);
+      color: var(--light);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+
+    .dashboard-container {
+      background-color: #1e1e1e;
+      border-radius: 15px;
+      padding: 2.5rem;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--secondary);
+      margin-bottom: 2rem;
+      font-weight: 600;
+    }
+
+    .password-form,
+    .dashboard-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    input {
+      padding: 0.8rem;
+      border-radius: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background-color: rgba(255, 255, 255, 0.05);
+      color: var(--light);
+      font-size: 1rem;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--secondary);
+      box-shadow: 0 0 6px rgba(0, 206, 201, 0.3);
+    }
+
+    button {
+      padding: 0.85rem;
+      border-radius: 5px;
+      border: none;
+      background-color: var(--primary);
+      color: white;
+      font-weight: 500;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .error-message {
+      color: var(--danger);
+      text-align: center;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .dashboard-content {
+      display: none;
+      margin-top: 1rem;
+    }
+
+    .page-link {
+      display: block;
+      text-align: center;
+      padding: 0.85rem;
+      border-radius: 5px;
+      background-color: var(--secondary);
+      color: var(--dark);
+      text-decoration: none;
+      font-weight: 500;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .page-link:hover {
+      background-color: var(--secondary-hover);
+      transform: translateY(-2px);
+    }
+
+    .locked .dashboard-content {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container locked" id="dashboard">
+    <h1>Admin Dashboard</h1>
+
+    <div class="password-form" id="password-form">
+      <div class="form-group">
+        <label for="admin-password">Enter Admin Password</label>
+        <input type="password" id="admin-password" placeholder="Password">
+      </div>
+      <button onclick="checkPassword()">Unlock Dashboard</button>
+      <div class="error-message" id="password-error">Incorrect password</div>
+    </div>
+
+    <div class="dashboard-content" id="dashboard-content">
+      <a href="sign.html" class="page-link">Sign Page</a>
+      <a href="plans.html" class="page-link">Plans Page</a>
+      <a href="index.html" class="page-link">Store Page</a>
+      <a href="join.html" class="page-link">Payment Approvals</a>
+    </div>
+  </div>
+
+  <script>
+    function checkPassword() {
+      const password = document.getElementById('admin-password').value;
+      const correctPassword = "mkb123";
+      const dashboard = document.getElementById('dashboard');
+      const error = document.getElementById('password-error');
+
+      if (password === correctPassword) {
+        dashboard.classList.remove('locked');
+        document.getElementById('password-form').style.display = 'none';
+        document.getElementById('dashboard-content').style.display = 'flex';
+        sessionStorage.setItem('adminUnlocked', 'true');
+      } else {
+        error.style.display = 'block';
+        setTimeout(() => {
+          error.style.display = 'none';
+        }, 3000);
+      }
+    }
+
+    window.onload = function () {
+      if (sessionStorage.getItem('adminUnlocked') === 'true') {
+        const dashboard = document.getElementById('dashboard');
+        dashboard.classList.remove('locked');
+        document.getElementById('password-form').style.display = 'none';
+        document.getElementById('dashboard-content').style.display = 'flex';
+      }
+    };
+
+    document.getElementById('admin-password').addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') checkPassword();
+    });
+  </script>
+</body>
+</html>

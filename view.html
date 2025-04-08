@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Details | Berry Games</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+        }
+        
+        header {
+            background-color: #000000;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .logo {
+            font-size: 2.5em;
+            color: #4CAF50;
+            font-weight: bold;
+            font-family: 'Arial Black', sans-serif;
+            text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+        }
+        
+        .logo span {
+            color: #00b7eb;
+        }
+        
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+        }
+        
+        .back-btn:hover {
+            color: #4CAF50;
+        }
+        
+        .game-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            display: flex;
+            gap: 40px;
+        }
+        
+        .game-poster {
+            flex: 1;
+        }
+        
+        .game-poster img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .additional-images {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .additional-images img {
+            max-width: 150px;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .game-details {
+            flex: 1;
+        }
+        
+        .game-title {
+            font-size: 2.5em;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+        
+        .game-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        
+        .rating {
+            color: #FFC107;
+        }
+        
+        .download-size {
+            color: #00b7eb;
+        }
+        
+        .game-description {
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .download-section {
+            background-color: #1e1e1e;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .download-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #4CAF50;
+        }
+        
+        .download-options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .download-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        
+        .download-btn:hover {
+            background-color: #3e8e41;
+            transform: translateY(-2px);
+        }
+        
+        .download-btn i {
+            font-size: 1.2em;
+        }
+        
+        .system-requirements {
+            margin-top: 30px;
+        }
+        
+        .requirements-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #4CAF50;
+        }
+        
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .requirements-column h3 {
+            color: #00b7eb;
+            margin-bottom: 10px;
+        }
+        
+        .requirements-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .requirements-list li {
+            margin-bottom: 8px;
+            display: flex;
+        }
+        
+        .requirements-list li span:first-child {
+            color: #888;
+            min-width: 120px;
+            display: inline-block;
+        }
+        
+        .upgrade-prompt {
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .upgrade-btn {
+            background-color: #FF5722;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+        
+        .upgrade-btn:hover {
+            background-color: #E64A19;
+        }
+        
+        @media (max-width: 768px) {
+            .game-container {
+                flex-direction: column;
+            }
+            
+            .requirements-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .additional-images img {
+                max-width: 100px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <a href="index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Store
+        </a>
+        <div class="logo">BERRY<span>GAMES</span></div>
+    </header>
+    
+    <div class="game-container">
+        <div class="game-poster">
+            <img id="game-image" src="" alt="Game Poster">
+            <div class="additional-images" id="additional-images"></div>
+        </div>
+        
+        <div class="game-details">
+            <h1 id="game-title" class="game-title">Loading...</h1>
+            <div class="game-meta">
+                <div id="game-rating" class="rating">Loading...</div>
+                <div id="game-size" class="download-size">Loading...</div>
+            </div>
+            <p id="game-description" class="game-description">Loading...</p>
+            <div class="download-section">
+                <h2 class="download-title">Download</h2>
+                <div class="download-options">
+                    <a id="downloadLinkBtn" href="" target="_blank" class="download-btn">
+                        <i class="fas fa-download"></i> Download from Media fire
+                    </a>
+                </div>
+                <div id="upgrade-prompt" class="upgrade-prompt" style="display: none;">
+                    <h3>Upgrade Required</h3>
+                    <p>This game requires a higher subscription plan. Upgrade now to access this and other premium games!</p>
+                    <button class="upgrade-btn" onclick="window.location.href='plans.html'">Upgrade Plan</button>
+                </div>
+            </div>
+            <div class="system-requirements">
+                <h2 class="requirements-title">System Requirements</h2>
+                <div class="requirements-grid">
+                    <div class="requirements-column">
+                        <h3>Minimum</h3>
+                        <ul class="requirements-list" id="min-requirements"></ul>
+                    </div>
+                    <div class="requirements-column">
+                        <h3>Recommended</h3>
+                        <ul class="requirements-list" id="rec-requirements"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDANYS44qmTxUZb40SK50di8XHwaeOiPkM",
+            authDomain: "sub-ed-62348.firebaseapp.com",
+            projectId: "sub-ed-62348",
+            storageBucket: "sub-ed-62348.firebasestorage.app",
+            messagingSenderId: "133365566054",
+            appId: "1:133365566054:web:966a40fe8443d29aabfba7",
+            measurementId: "G-MYR2K02YPK"
+        };
+
+        try {
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+            const auth = getAuth(app);
+            console.log("Firebase initialized successfully");
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const gameId = urlParams.get('game');
+            console.log("Game ID from URL:", gameId);
+
+            let currentUser = null;
+            let currentPlan = '0'; // Default to free plan
+
+            // Check auth state
+            onAuthStateChanged(auth, async (user) => {
+                currentUser = user;
+                if (user) {
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    if (userDoc.exists()) {
+                        currentPlan = userDoc.data().plan || '0';
+                    }
+                }
+                loadGameDetails();
+            });
+
+            async function loadGameDetails() {
+                if (!gameId) {
+                    console.error("No game ID provided in URL");
+                    document.getElementById('game-title').textContent = "Error: No Game Specified";
+                    document.getElementById('game-description').textContent = "Please return to the store and select a game.";
+                    return;
+                }
+
+                try {
+                    const docRef = doc(db, "games", gameId);
+                    const docSnap = await getDoc(docRef);
+
+                    if (docSnap.exists()) {
+                        const game = docSnap.data();
+                        console.log("Game data fetched:", game);
+
+                        document.title = `${game.title} | Berry Games`;
+                        document.getElementById('game-title').textContent = game.title || "Untitled Game";
+                        document.getElementById('game-image').src = game.image || "https://via.placeholder.com/300x400";
+                        document.getElementById('game-image').alt = game.title || "Game Poster";
+                        document.getElementById('game-rating').textContent = game.rating || "N/A";
+                        document.getElementById('game-size').textContent = game.size || "Unknown";
+                        document.getElementById('game-description').textContent = game.description || "No description available.";
+
+                        // Check access
+                        const gameClass = game.class || '0';
+                        const planOrder = ['0', 'A', 'B', 'C'];
+                        const userPlanIndex = planOrder.indexOf(currentPlan);
+                        const gameClassIndex = planOrder.indexOf(gameClass);
+                        
+                        if (userPlanIndex < gameClassIndex) {
+                            // User doesn't have access
+                            document.getElementById('downloadLinkBtn').style.display = 'none';
+                            document.getElementById('upgrade-prompt').style.display = 'block';
+                        } else {
+                            // User has access
+                            document.getElementById('downloadLinkBtn').style.display = 'inline-flex';
+                            document.getElementById('upgrade-prompt').style.display = 'none';
+                            
+                            // Set Google Drive download link
+                            const downloadLinkBtn = document.getElementById('downloadLinkBtn');
+                            if (game.downloadUrl) {
+                                const directDownloadUrl = game.downloadUrl.replace('/view', '/uc?export=download');
+                                downloadLinkBtn.href = directDownloadUrl;
+                            } else {
+                                downloadLinkBtn.href = "#";
+                                downloadLinkBtn.textContent = "Download Unavailable";
+                                downloadLinkBtn.style.backgroundColor = "#888";
+                                downloadLinkBtn.style.cursor = "not-allowed";
+                            }
+                        }
+
+                        // Display additional images
+                        const additionalImagesDiv = document.getElementById('additional-images');
+                        additionalImagesDiv.innerHTML = '';
+                        if (game.additionalImages && Array.isArray(game.additionalImages) && game.additionalImages.length > 0) {
+                            game.additionalImages.forEach((imageUrl) => {
+                                const img = document.createElement('img');
+                                img.src = imageUrl || "https://via.placeholder.com/150";
+                                img.alt = `${game.title} additional image`;
+                                additionalImagesDiv.appendChild(img);
+                            });
+                        } else {
+                            const noImagesText = document.createElement('p');
+                            noImagesText.textContent = "No additional images available.";
+                            noImagesText.style.color = "#888";
+                            additionalImagesDiv.appendChild(noImagesText);
+                        }
+
+                        const minReqList = document.getElementById('min-requirements');
+                        minReqList.innerHTML = '';
+                        if (game.minRequirements) {
+                            for (const [key, value] of Object.entries(game.minRequirements)) {
+                                const li = document.createElement('li');
+                                li.innerHTML = `<span>${key}:</span> <span>${value}</span>`;
+                                minReqList.appendChild(li);
+                            }
+                        } else {
+                            minReqList.innerHTML = '<li>No minimum requirements specified</li>';
+                        }
+
+                        const recReqList = document.getElementById('rec-requirements');
+                        recReqList.innerHTML = '';
+                        if (game.recRequirements) {
+                            for (const [key, value] of Object.entries(game.recRequirements)) {
+                                const li = document.createElement('li');
+                                li.innerHTML = `<span>${key}:</span> <span>${value}</span>`;
+                                recReqList.appendChild(li);
+                            }
+                        } else {
+                            recReqList.innerHTML = '<li>No recommended requirements specified</li>';
+                        }
+                    } else {
+                        console.error("Game not found in Firestore for ID:", gameId);
+                        document.getElementById('game-title').textContent = "Game Not Found";
+                        document.getElementById('game-description').textContent = "This game does not exist in our database. Please return to the store.";
+                        document.getElementById('downloadLinkBtn').href = "#";
+                        document.getElementById('downloadLinkBtn').textContent = "Download Unavailable";
+                        document.getElementById('downloadLinkBtn').style.backgroundColor = "#888";
+                        document.getElementById('downloadLinkBtn').style.cursor = "not-allowed";
+                        document.getElementById('additional-images').innerHTML = '<p style="color: #888;">No additional images available.</p>';
+                    }
+                } catch (error) {
+                    console.error("Error fetching game details:", error);
+                    document.getElementById('game-title').textContent = "Error Loading Game";
+                    document.getElementById('game-description').textContent = "An error occurred while loading the game details. Please try again later.";
+                    document.getElementById('downloadLinkBtn').href = "#";
+                    document.getElementById('downloadLinkBtn').textContent = "Download Unavailable";
+                    document.getElementById('downloadLinkBtn').style.backgroundColor = "#888";
+                    document.getElementById('downloadLinkBtn').style.cursor = "not-allowed";
+                    document.getElementById('additional-images').innerHTML = '<p style="color: #888;">No additional images available.</p>';
+                }
+            }
+
+            window.onload = loadGameDetails;
+        } catch (error) {
+            console.error("Failed to initialize Firebase:", error);
+            document.body.innerHTML = "<h1 style='text-align: center; color: #FF5722;'>Failed to initialize application. Check console for details.</h1>";
+        }
+    </script>
+</body>
+</html>
