@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berry Game Store - Your Ultimate Gaming Destination</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        header {
+            background-color: #000000;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 2.5em;
+            color: #4CAF50;
+            font-weight: bold;
+            font-family: 'Arial Black', sans-serif;
+            text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+        }
+
+        .logo span {
+            color: #00b7eb;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #4CAF50;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .search-bar input {
+            padding: 8px 15px;
+            width: 250px;
+            border: none;
+            border-radius: 20px;
+            background-color: #2a2a2a;
+            color: #ffffff;
+            font-size: 0.9em;
+        }
+
+        .search-bar button {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 20px;
+            color: #ffffff;
+            cursor: pointer;
+            margin-left: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .search-bar button:hover {
+            background-color: #3e8e41;
+        }
+
+        .auth-buttons button {
+            margin-left: 10px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-btn {
+            background: none;
+            border: 1px solid #4CAF50;
+            color: #4CAF50;
+        }
+
+        .signup-btn {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+        }
+
+        .login-btn:hover {
+            background-color: rgba(76, 175, 80, 0.2);
+        }
+
+        .signup-btn:hover {
+            background-color: #3e8e41;
+        }
+
+        .cart-btn {
+            position: relative;
+            margin-left: 15px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #FF5722;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+        }
+
+        .slogan {
+            text-align: center;
+            font-size: 1.8em;
+            padding: 30px 0;
+            color: #00b7eb;
+            background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,183,235,0.2) 50%, rgba(0,0,0,0) 100%);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(0, 183, 235, 0.5);
+        }
+
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .featured-banner {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #4CAF50, #00b7eb);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+        }
+
+        .banner-content {
+            position: absolute;
+            text-align: center;
+            color: white;
+            z-index: 2;
+        }
+
+        .banner-content h2 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .banner-content p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .banner-content button {
+            padding: 12px 30px;
+            background-color: #FF5722;
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .banner-content button:hover {
+            background-color: #E64A19;
+            transform: scale(1.05);
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            margin: 30px 0 20px;
+            color: #4CAF50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .view-all {
+            font-size: 0.8em;
+            color: #00b7eb;
+            text-decoration: none;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .game-card {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 183, 235, 0.2);
+        }
+
+        .game-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .game-info {
+            padding: 15px;
+        }
+
+        .game-title {
+            font-size: 1.2em;
+            margin: 0 0 5px;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .game-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .discount {
+            background-color: #FF5722;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #888;
+            font-size: 0.8em;
+        }
+
+        .add-to-cart {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background-color: #3e8e41;
+        }
+
+        .rating {
+            color: #FFC107;
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+
+        .platform-icons {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .platform-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6em;
+        }
+
+        .categories {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .category {
+            background-color: #2a2a2a;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .category:hover, .category.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-content {
+            background-color: #1e1e1e;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 60%;
+            max-width: 800px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: white;
+        }
+
+        footer {
+            background-color: #000000;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .footer-column h3 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #00b7eb;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .social-icon:hover {
+            background-color: #4CAF50;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid #2a2a2a;
+            color: #777;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            nav ul {
+                margin-top: 15px;
+            }
+
+            .search-bar {
+                margin: 15px 0;
+                width: 100%;
+            }
+
+            .search-bar input {
+                width: 100%;
+            }
+
+            .featured-banner {
+                height: 300px;
+            }
+
+            .banner-content h2 {
+                font-size: 2em;
+            }
+
+            .game-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .modal-content {
+                width: 90%;
+                padding: 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">BERRY<span>GAMES</span></div>
+        <div class="user-actions">
+            <div class="search-bar">
+                <input type="text" placeholder="Search games..." id="search-input">
+                <button type="submit" onclick="searchGames()">🔍</button>
+            </div>
+            <div class="auth-buttons">
+                <button class="login-btn" onclick="openModal('login-modal')">Login</button>
+                <button class="signup-btn" onclick="openModal('signup-modal')">Sign Up</button>
+            </div>
+            <button class="cart-btn" onclick="openModal('cart-modal')">
+                🛒
+                <span class="cart-count">0</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="slogan">YOUR GATEWAY TO EPIC ADVENTURES</div>
+
+    <div class="main-content" id="main-content">
+        <div class="featured-banner">
+            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Featured Game">
+            <div class="banner-content">
+                <h2>CYBERPUNK 2077</h2>
+                <p>Experience the open-world RPG of the dark future</p>
+                <button onclick="window.location.href='view.html?game=cyberpunk-2077'">BUY NOW - 30% OFF</button>
+            </div>
+        </div>
+
+        <div class="section-title">
+            Store
+            <a href="#" class="view-all">View All</a>
+        </div>
+        
+        <div class="game-grid" id="game-grid">
+            <!-- Games will be loaded here dynamically -->
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <span class="close-modal" onclick="closeModal('login-modal')">×</span>
+            <h2 style="text-align: center; color: #4CAF50;">Login</h2>
+            <form style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
+                <input type="email" placeholder="Email" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #2a2a2a; color: white;">
+                <input type="password" placeholder="Password" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #2a2a2a; color: white;">
+                <button type="submit" style="padding: 12px; background-color: #4CAF50; border: none; border-radius: 5px; color: white; font-weight: bold; cursor: pointer;">Login</button>
+                <p style="text-align: center; color: #aaa;">Don't have an account? <a href="#" style="color: #00b7eb; cursor: pointer;" onclick="closeModal('login-modal'); openModal('signup-modal')">Sign up</a></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="signup-modal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <span class="close-modal" onclick="closeModal('signup-modal')">×</span>
+            <h2 style="text-align: center; color: #4CAF50;">Sign Up</h2>
+            <form style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
+                <input type="text" placeholder="Username" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #2a2a2a; color: white;">
+                <input type="email" placeholder="Email" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #2a2a2a; color: white;">
+                <input type="password" placeholder="Password" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #2a2a2a; color: white;">
+                <input type="password" placeholder="Confirm Password" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #2a2a2a; color: white;">
+                <button type="submit" style="padding: 12px; background-color: #4CAF50; border: none; border-radius: 5px; color: white; font-weight: bold; cursor: pointer;">Sign Up</button>
+                <p style="text-align: center; color: #aaa;">Already have an account? <a href="#" style="color: #00b7eb; cursor: pointer;" onclick="closeModal('signup-modal'); openModal('login-modal')">Login</a></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="cart-modal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <span class="close-modal" onclick="closeModal('cart-modal')">×</span>
+            <h2 style="text-align: center; color: #4CAF50;">Your Cart</h2>
+            <div id="cart-items" style="margin: 20px 0; max-height: 400px; overflow-y: auto;">
+                <p style="text-align: center; color: #aaa;">Your cart is empty</p>
+            </div>
+            <div style="border-top: 1px solid #444; padding-top: 15px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                    <span>Subtotal:</span>
+                    <span id="cart-subtotal">$0.00</span>
+                </div>
+                <button style="width: 100%; padding: 12px; background-color: #4CAF50; border: none; border-radius: 5px; color: white; font-weight: bold; cursor: pointer;">PROCEED TO CHECKOUT</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Shop</h3>
+                <ul>
+                    <li><a href="index.html">All Games</a></li>
+                    <li><a href="#">New Releases</a></li>
+                    <li><a href="#">Coming Soon</a></li>
+                    <li><a href="#">Deals</a></li>
+                    <li><a href="#">Gift Cards</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Adminstrator</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 Berry Game Store. All rights reserved. All trademarks are property of their respective owners.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        // Import Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDANYS44qmTxUZb40SK50di8XHwaeOiPkM",
+            authDomain: "sub-ed-62348.firebaseapp.com",
+            projectId: "sub-ed-62348",
+            storageBucket: "sub-ed-62348.firebasestorage.app",
+            messagingSenderId: "133365566054",
+            appId: "1:133365566054:web:966a40fe8443d29aabfba7",
+            measurementId: "G-MYR2K02YPK"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+
+        // State and DOM elements
+        let cart = [];
+        const gameGrid = document.getElementById('game-grid');
+
+        // Load all games for store
+        async function loadGames() {
+            const querySnapshot = await getDocs(collection(db, "games"));
+            gameGrid.innerHTML = ''; // Clear existing games
+            querySnapshot.forEach((doc) => {
+                const game = doc.data();
+                const gameCard = document.createElement('a');
+                gameCard.href = `view.html?game=${doc.id}`;
+                gameCard.className = 'game-card';
+                gameCard.innerHTML = `
+                    <img src="${game.image}" alt="${game.title}" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">${game.title}</h3>
+                        <div class="rating">${game.rating}</div>
+                        <div class="game-price">
+                            <div>
+                                <span class="price">$${game.price.toFixed(2)}</span>
+                                ${game.originalPrice ? `<span class="original-price">$${game.originalPrice.toFixed(2)}</span>` : ''}
+                                ${game.discount ? `<span class="discount">${game.discount}%</span>` : ''}
+                            </div>
+                            <button class="add-to-cart" onclick="addToCart('${game.title}', ${game.price}); event.preventDefault();">+</button>
+                        </div>
+                    </div>
+                `;
+                gameGrid.appendChild(gameCard);
+            });
+        }
+
+        // Cart Functions
+        function addToCart(gameName, price) {
+            cart.push({ name: gameName, price: price });
+            updateCartCount();
+            updateCartModal();
+            alert(`${gameName} added to cart!`);
+        }
+
+        function updateCartCount() {
+            document.querySelector('.cart-count').textContent = cart.length;
+        }
+
+        function updateCartModal() {
+            const cartItems = document.getElementById('cart-items');
+            const cartSubtotal = document.getElementById('cart-subtotal');
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p style="text-align: center; color: #aaa;">Your cart is empty</p>';
+                cartSubtotal.textContent = '$0.00';
+                return;
+            }
+
+            let itemsHTML = '';
+            let subtotal = 0;
+
+            cart.forEach(item => {
+                subtotal += item.price;
+                itemsHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #444;">
+                        <div>
+                            <div style="font-weight: bold;">${item.name}</div>
+                            <div style="color: #4CAF50; font-size: 0.9em;">$${item.price.toFixed(2)}</div>
+                        </div>
+                        <button onclick="removeFromCart('${item.name}')" style="background: none; border: none; color: #FF5722; cursor: pointer;">Remove</button>
+                    </div>
+                `;
+            });
+
+            cartItems.innerHTML = itemsHTML;
+            cartSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+        }
+
+        function removeFromCart(gameName) {
+            cart = cart.filter(item => item.name !== gameName);
+            updateCartCount();
+            updateCartModal();
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = 'none';
+            }
+        }
+
+        // Search functionality (simple example)
+        function searchGames() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            // This is a placeholder; you'd need to filter the games from Firebase
+            alert(`Searching for: ${searchTerm}`);
+        }
+
+        // Initialize the page
+        window.onload = loadGames;
+    </script>
+</body>
+</html>
