@@ -618,7 +618,21 @@
             <p>© 2025 Berry Game Store | btem @fficial | All trademarks are property of their respective owners.</p>
         </div>
     </footer>
-
+<script async type="application/javascript" src="https://a.pemsrv.com/ad-provider.js"></script> 
+ <ins class="eas6a97888e35" data-zoneid="5581190"></ins> 
+    
+ <script>(AdProvider = window.AdProvider || []).push({"serve": {}});
+  // Only show ads for Class 0 users
+        document.addEventListener('DOMContentLoaded', function() {
+            // This assumes you have currentPlan variable available globally
+            if (typeof currentPlan !== 'undefined' && currentPlan !== "0") {
+                // Remove ad elements if user is not Class 0
+                const adElements = document.querySelectorAll('.eas6a97888e35');
+                adElements.forEach(el => el.remove());
+            }
+        });
+ </script>
+    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
         import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
