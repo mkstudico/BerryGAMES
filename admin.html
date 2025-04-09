@@ -168,15 +168,13 @@
                 <input type="text" id="os" name="os" required>
             </div>
 
+            <div class="form-container">
+                <div class="loader" id="loader"></div>
+                <form id="gameForm">
+
             <div class="form-group">
                 <label for="downloadLink">Downloadable Link (MediaFire)</label>
                 <input type="text" id="downloadLink" name="downloadLink" placeholder="e.g., https://www.mediafire.com/file/..." required>
-            </div>
-
-            <!-- New YouTube Video Link Field -->
-            <div class="form-group">
-                <label for="youtubeLink">YouTube Video Link (Optional)</label>
-                <input type="text" id="youtubeLink" name="youtubeLink" placeholder="e.g., https://www.youtube.com/watch?v=...">
             </div>
 
             <div class="form-group">
@@ -242,7 +240,6 @@
                 const description = document.getElementById('description').value;
                 const os = document.getElementById('os').value;
                 const downloadLink = document.getElementById('downloadLink').value;
-                const youtubeLink = document.getElementById('youtubeLink').value;
                 const systemRequirements = document.getElementById('systemRequirements').value;
                 const source = document.getElementById('source').value;
                 const gameClass = document.getElementById('gameClass').value;
@@ -258,11 +255,48 @@
                     throw new Error("Downloadable Link must be a valid MediaFire URL.");
                 }
 
-                // Validate YouTube link if provided
-                if (youtubeLink && !youtubeLink.includes("youtube.com") && !youtubeLink.includes("youtu.be")) {
-                    throw new Error("YouTube link must be a valid YouTube URL.");
-                }
+                // Rest of the upload logic remains unchanged
+                status.textContent = "Uploading main image...";
+                const mainImageFile = document.getElementById('mainImage').files[0];
+                if (!mainImageFile) throw new Error("Main image is required.");
+                const mainImageUrl = await uploadToImgBB(mainImageFile);
 
+                // Additional images upload and game data preparation remain unchanged
+                
+                const gameData = {
+                    title,
+                    image: mainImageUrl,
+                    description,
+                    additionalImages: additionalImagesUrls,
+                    os,
+                    downloadUrl: downloadLink,
+                    recRequirements: parseSystemRequirements(systemRequirements),
+                    source,
+                    rating: "★★★★☆",
+                    price,
+                    class: gameClass,
+                    platforms: [os.split(',')[0].trim()]
+                };
+
+                status.textContent = "Saving to database...";
+                const gameId = title.toLowerCase().replace(/\s+/g, '-');
+                await setDoc(doc(db, "games", gameId), gameData);
+                console.log("Game uploaded to Firestore with ID:", gameId);
+
+                status.textContent = "Game uploaded successfully!";
+                status.classList.remove('error');
+                document.getElementById('gameForm').reset();
+                clearPreviews();
+            } catch (error) {
+                console.error("Upload error:", error);
+                status.textContent = "Error: " + error.message;
+                status.classList.add('error');
+            } finally {
+                submitBtn.disabled = false;
+                loader.style.display = 'none';
+            }
+        });
+           
                 // Upload main image to ImgBB
                 status.textContent = "Uploading main image...";
                 const mainImageFile = document.getElementById('mainImage').files[0];
@@ -287,7 +321,6 @@
                     additionalImages: additionalImagesUrls,
                     os,
                     downloadUrl: downloadLink,
-                    youtubeLink: youtubeLink || null, // Store YouTube link or null if empty
                     recRequirements: parseSystemRequirements(systemRequirements),
                     source,
                     rating: "★★★★☆",
@@ -307,15 +340,16 @@
                 status.classList.remove('error');
                 document.getElementById('gameForm').reset();
                 clearPreviews();
-            } catch (error) {
+             catch (error) {
                 console.error("Upload error:", error);
                 status.textContent = "Error: " + error.message;
                 status.classList.add('error');
             } finally {
+                // Hide loading state
                 submitBtn.disabled = false;
                 loader.style.display = 'none';
             }
-        });
+        ;
 
         // ImgBB upload function
         async function uploadToImgBB(file) {
