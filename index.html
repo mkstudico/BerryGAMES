@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Details | Berry Games</title>
-    <meta http-equiv="Delegate-CH" content="Sec-CH-UA https://s.magsrv.com; Sec-CH-UA-Mobile https://s.magsrv.com; Sec-CH-UA-Arch https://s.magsrv.com; Sec-CH-UA-Model https://s.magsrv.com; Sec-CH-UA-Platform https://s.magsrv.com; Sec-CH-UA-Platform-Version https://s.magsrv.com; Sec-CH-UA-Bitness https://s.magsrv.com; Sec-CH-UA-Full-Version-List https://s.magsrv.com; Sec-CH-UA-Full-Version https://s.magsrv.com;">
-    <meta http-equiv="Delegate-CH" content="Sec-CH-UA https://s.magsrv.com https://5581206.notify6.com; Sec-CH-UA-Mobile https://s.magsrv.com https://5581206.notify6.com; Sec-CH-UA-Arch https://s.magsrv.com https://5581206.notify6.com; Sec-CH-UA-Model https://s.magsrv.com https://5581206.notify6.com; Sec-CH-UA-Platform https://s.magsrv.com https://5581206.notify6.com; Sec-CH-UA-Platform-Version https://s.magsrv.com https://5581206.notify6.com; Sec-CH-UA-Bitness https://s.magsrv.com https://5581206.notify6.com; Sec-CH-UA-Full-Version-List https://s.magsrv.com https://5581206.notify6.com; Sec-CH-UA-Full-Version https://s.magsrv.com https://5581206.notify6.com;">
+    <title>Berry Game Store - Your Ultimate Gaming Destination</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
     <style>
         body {
             margin: 0;
@@ -18,7 +16,7 @@
             background-color: #121212;
             color: #ffffff;
         }
-        
+
         header {
             background-color: #000000;
             padding: 15px 30px;
@@ -26,8 +24,11 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        
+
         .logo {
             font-size: 2.5em;
             color: #4CAF50;
@@ -35,217 +36,606 @@
             font-family: 'Arial Black', sans-serif;
             text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
         }
-        
+
         .logo span {
             color: #00b7eb;
         }
-        
-        .back-btn {
-            color: white;
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            color: #ffffff;
             text-decoration: none;
-            font-size: 1.2em;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #4CAF50;
+        }
+
+        .user-actions {
             display: flex;
             align-items: center;
         }
-        
-        .back-btn:hover {
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+            position: relative;
+        }
+
+        .search-bar input {
+            padding: 8px 15px;
+            width: 250px;
+            border: none;
+            border-radius: 20px;
+            background-color: #2a2a2a;
+            color: #ffffff;
+            font-size: 0.9em;
+        }
+
+        .search-bar button {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 20px;
+            color: #ffffff;
+            cursor: pointer;
+            margin-left: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .search-bar button:hover {
+            background-color: #3e8e41;
+        }
+
+        .auth-buttons button {
+            margin-left: 10px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-btn {
+            background: none;
+            border: 1px solid #4CAF50;
             color: #4CAF50;
         }
-        
-        .game-container {
-            max-width: 1200px;
-            margin: 30px auto;
+
+        .signup-btn, .logout-btn {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+        }
+
+        .login-btn:hover {
+            background-color: rgba(76, 175, 80, 0.2);
+        }
+
+        .signup-btn:hover, .logout-btn:hover {
+            background-color: #3e8e41;
+        }
+
+        .wishlist-btn {
+            position: relative;
+            margin-left: 15px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        .wishlist-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #FF5722;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+        }
+
+        .slogan {
+            text-align: center;
+            font-size: 1.8em;
+            padding: 30px 0;
+            color: #00b7eb;
+            background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,183,235,0.2) 50%, rgba(0,0,0,0) 100%);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(0, 183, 235, 0.5);
+        }
+
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
             padding: 20px;
-            display: flex;
-            gap: 40px;
-        }
-        
-        .game-poster {
-            flex: 1;
-        }
-        
-        .game-poster img {
-            width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-        }
-        
-        .additional-images {
-            margin-top: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .additional-images img {
-            max-width: 150px;
-            border-radius: 5px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
         }
 
-        /* Added YouTube video container styles */
-        .youtube-video-container {
-            margin-top: 20px;
-            width: 100%;
-        }
-
-        .youtube-video-container iframe {
+        .featured-banner {
             width: 100%;
             height: 400px;
+            background: linear-gradient(135deg, #4CAF50, #00b7eb);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+        }
+
+        .banner-content {
+            position: absolute;
+            text-align: center;
+            color: white;
+            z-index: 2;
+        }
+
+        .banner-content h2 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .banner-content p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .banner-content button {
+            padding: 12px 30px;
+            background-color: #FF5722;
             border: none;
-            border-radius: 8px;
+            border-radius: 30px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
         }
-        
-        .game-details {
-            flex: 1;
+
+        .banner-content button:hover {
+            background-color: #E64A19;
+            transform: scale(1.05);
         }
-        
-        .game-title {
-            font-size: 2.5em;
+
+        .section-title {
+            font-size: 1.8em;
+            margin: 30px 0 20px;
             color: #4CAF50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .view-all {
+            font-size: 0.8em;
+            color: #00b7eb;
+            text-decoration: none;
+        }
+
+        .categories {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .category {
+            background-color: #2a2a2a;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .category:hover, .category.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .game-card {
+            background-color: #1e1e1e;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .game-card[data-class="0"] {
+            border-left: 5px solid #4CAF50;
+        }
+        .game-card[data-class="A"] {
+            border-left: 5px solid #FF5722;
+        }
+        .game-card[data-class="B"] {
+            border-left: 5px solid #00b7eb;
+        }
+        .game-card[data-class="C"] {
+            border-left: 5px solid #FFC107;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 183, 235, 0.2);
+        }
+
+        .game-image {
+            width: 50%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .game-info {
+            padding: 15px;
+        }
+
+        .game-title {
+            font-size: 1.2em;
+            margin: 0 0 5px;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .game-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .discount {
+            background-color: #FF5722;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #888;
+            font-size: 0.8em;
+        }
+
+        .add-to-cart {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background-color: #3e8e41;
+        }
+
+        .rating {
+            color: #FFC107;
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+
+        .game-class {
+            color: #FFC107;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+
+        /* Search results dropdown */
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: #2a2a2a;
+            border-radius: 0 0 10px 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-result-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .search-result-item:hover {
+            background-color: #3a3a3a;
+        }
+
+        .search-result-item .title {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .search-result-item .description {
+            font-size: 0.8em;
+            color: #aaa;
+            margin-top: 5px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .search-highlight {
+            background-color: rgba(76, 175, 80, 0.3);
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        /* Wishlist button on game cards */
+        .wishlist-heart {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .wishlist-heart i {
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .wishlist-heart.active i {
+            color: #FF5722;
+        }
+
+        .like-count {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 2px 8px;
+            font-size: 0.8em;
+            display: flex;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .like-count i {
+            margin-right: 5px;
+            color: #FF5722;
+        }
+
+        /* Access denied box */
+        .access-denied-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #1e1e1e;
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+            padding: 20px;
+            z-index: 10000;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        .access-denied-message {
+            color: #ff0000;
+            font-size: 1.2em;
+            font-weight: bold;
             margin-bottom: 10px;
         }
         
-        .game-meta {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            align-items: center;
-        }
-        
-        .rating {
-            color: #FFC107;
-        }
-        
-        .download-size {
-            color: #00b7eb;
-        }
-        
-        .game-description {
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-        
-        .download-section {
-            background-color: #1e1e1e;
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-        }
-        
-        .download-title {
-            font-size: 1.5em;
-            margin-bottom: 15px;
-            color: #4CAF50;
-        }
-        
-        .download-options {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .download-btn {
+        .upgrade-button {
             background-color: #4CAF50;
             color: white;
             border: none;
-            padding: 12px 25px;
+            padding: 8px 15px;
             border-radius: 5px;
             cursor: pointer;
+            margin-top: 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -55%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-content {
+            background-color: #1e1e1e;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 60%;
+            max-width: 800px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #aaa;
+            font-size: 28px;
             font-weight: bold;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
+            cursor: pointer;
         }
-        
-        .download-btn:hover {
-            background-color: #3e8e41;
-            transform: translateY(-2px);
+
+        .close-modal:hover {
+            color: white;
         }
-        
-        .download-btn i {
-            font-size: 1.2em;
+
+        footer {
+            background-color: #000000;
+            padding: 40px 0;
+            margin-top: 50px;
         }
-        
-        .system-requirements {
-            margin-top: 30px;
-        }
-        
-        .requirements-title {
-            font-size: 1.5em;
-            margin-bottom: 15px;
-            color: #4CAF50;
-        }
-        
-        .requirements-grid {
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            padding: 0 20px;
         }
-        
-        .requirements-column h3 {
-            color: #00b7eb;
-            margin-bottom: 10px;
+
+        .footer-column h3 {
+            color: #4CAF50;
+            margin-bottom: 20px;
         }
-        
-        .requirements-list {
+
+        .footer-column ul {
             list-style: none;
             padding: 0;
+            margin: 0;
         }
-        
-        .requirements-list li {
-            margin-bottom: 8px;
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #00b7eb;
+        }
+
+        .social-icons {
             display: flex;
-        }
-        
-        .requirements-list li span:first-child {
-            color: #888;
-            min-width: 120px;
-            display: inline-block;
-        }
-        
-        .upgrade-prompt {
-            background-color: #2a2a2a;
-            padding: 20px;
-            border-radius: 10px;
+            gap: 15px;
             margin-top: 20px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .social-icon:hover {
+            background-color: #4CAF50;
+        }
+
+        .copyright {
             text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid #2a2a2a;
+            color: #777;
         }
-        
-        .upgrade-btn {
-            background-color: #FF5722;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 15px;
-            transition: all 0.3s;
-        }
-        
-        .upgrade-btn:hover {
-            background-color: #E64A19;
-        }
-        
+
         @media (max-width: 768px) {
-            .game-container {
+            header {
                 flex-direction: column;
-            }
-            
-            .requirements-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .additional-images img {
-                max-width: 100px;
+                padding: 15px;
             }
 
-            /* Responsive YouTube video */
-            .youtube-video-container iframe {
-                height: 250px;
+            nav ul {
+                margin-top: 15px;
+            }
+
+            .search-bar {
+                margin: 15px 0;
+                width: 100%;
+            }
+
+            .search-bar input {
+                width: 100%;
+            }
+
+            .featured-banner {
+                height: 300px;
+            }
+
+            .banner-content h2 {
+                font-size: 2em;
+            }
+
+            .game-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .modal-content {
+                width: 90%;
+                padding: 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -253,286 +643,514 @@
 </head>
 <body>
     <header>
-        <a href="index.html" class="back-btn">
-            <i class="fas fa-arrow-left"></i> Back to Store
-        </a>
         <div class="logo">BERRY<span>GAMES</span></div>
+        <div class="user-actions">
+            <div class="search-bar">
+                <input type="text" placeholder="Search games..." id="search-input" oninput="searchGames()">
+                <button type="button" onclick="performSearch()">🔍</button>
+                <div class="search-results" id="search-results"></div>
+            </div>
+            <div class="auth-buttons" id="auth-buttons">
+                <button class="login-btn" onclick="window.location.href='sign.html'">Login</button>
+                <button class="signup-btn" id="signup-btn">Sign Up</button>
+            </div>
+            <button class="wishlist-btn" onclick="openModal('wishlist-modal')">
+                ❤️
+                <span class="wishlist-count">0</span>
+            </button>
+        </div>
     </header>
-    
-    <div class="game-container">
-        <div class="game-poster">
-            <img id="game-image" src="" alt="Game Poster">
-            <div class="additional-images" id="additional-images"></div>
-            <!-- Added YouTube video container -->
-            <div class="youtube-video-container" id="youtube-video"></div>
+
+    <div class="slogan">YOUR GATEWAY TO EPIC ADVENTURES</div>
+
+    <div class="main-content" id="main-content">
+        <div class="featured-banner">
+            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Featured Game">
+            <div class="banner-content">
+                <h2>CYBERPUNK 2077</h2>
+                <p>Certain games are Torent files, THANK YOU to support us.</p>
+                <button onclick="window.location.href='view.html?game=cyberpunk-2077'">BUY NOW - 30% OFF</button>
+            </div>
+        </div>
+
+        <div class="section-title">
+            Store
+            <a href="#" class="view-all">View All</a>
         </div>
         
-        <div class="game-details">
-            <h1 id="game-title" class="game-title">Loading...</h1>
-            <div class="game-meta">
-                <div id="game-rating" class="rating">Loading...</div>
-                <div id="game-size" class="download-size">Loading...</div>
-            </div>
-            <p id="game-description" class="game-description">Loading...</p>
-            <div class="download-section">
-                <h2 class="download-title">Download</h2>
-                <div class="download-options">
-                    <a id="downloadLinkBtn" href="" target="_blank" class="download-btn">
-                        <i class="fas fa-download"></i> Download from Media fire
-                    </a>
-                </div>
-                <div id="upgrade-prompt" class="upgrade-prompt" style="display: none;">
-                    <h3>Upgrade Required</h3>
-                    <p>This game requires a higher subscription plan. Upgrade now to access this and other premium games!</p>
-                    <button class="upgrade-btn" onclick="window.location.href='plans.html'">Upgrade Plan</button>
-                </div>
-            </div>
-            <div class="system-requirements">
-                <h2 class="requirements-title">System Requirements</h2>
-                <div class="requirements-grid">
-                    <div class="requirements-column">
-                        <h3>Minimum</h3>
-                        <ul class="requirements-list" id="min-requirements"></ul>
-                    </div>
-                    <div class="requirements-column">
-                        <h3>Recommended</h3>
-                        <ul class="requirements-list" id="rec-requirements"></ul>
-                    </div>
-                </div>
+        <div class="categories">
+            <div class="category active" onclick="filterGames('all')">All Games</div>
+            <div class="category" onclick="filterGames('0')">Free</div>
+            <div class="category" onclick="filterGames('A')">Class A</div>
+            <div class="category" onclick="filterGames('B')">Class B</div>
+            <div class="category" onclick="filterGames('C')">Class C</div>
+        </div>
+        
+        <div class="game-grid" id="game-grid">
+            <!-- Games will be loaded here dynamically -->
+        </div>
+    </div>
+
+    <!-- Wishlist Modal -->
+    <div id="wishlist-modal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <span class="close-modal" onclick="closeModal('wishlist-modal')">×</span>
+            <h2 style="text-align: center; color: #FF5722;">Your Wishlist</h2>
+            <div id="wishlist-items" style="margin: 20px 0; max-height: 500px; overflow-y: auto;">
+                <p style="text-align: center; color: #aaa;">Your wishlist is empty</p>
             </div>
         </div>
     </div>
-    
-   <!-- First Ad -->
-<script async type="application/javascript" src="https://a.pemsrv.com/ad-provider.js"></script>
-<ins class="eas6a97888e35" data-zoneid="5581196" data-keywords="keywords" data-sub="123450000"></ins>
-<script>
-(function() {
-    (window.AdProvider = window.AdProvider || []).push({"serve": {}});
-})();
-</script>
 
-<!-- Second Ad -->
-<script async type="application/javascript" src="https://a.pemsrv.com/ad-provider.js"></script>
-<ins class="eas6a97888e33" data-zoneid="5581202" data-keywords="keywords" data-sub="123450000"></ins>
-<script>
-(function() {
-    (window.AdProvider = window.AdProvider || []).push({"serve": {}});
-})();
-</script>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Shop</h3>
+                <ul>
+                    <li><a href="index.html">All Games</a></li>
+                    <li><a href="#">New Releases</a></li>
+                    <li><a href="#">Coming Soon</a></li>
+                    <li><a href="#">Deals</a></li>
+                    <li><a href="#">Gift Cards</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="dash.html">Adminstrator</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Connect</h3>
+                <div class="social-icons">
+                    <div class="social-icon"><i class="fab fa-facebook-f"></i></div>
+                    <div class="social-icon"><i class="fab fa-twitter"></i></div>
+                    <div class="social-icon"><i class="fab fa-instagram"></i></div>
+                    <div class="social-icon"><i class="fab fa-discord"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 Berry Game Store | btem @fficial | All trademarks are property of their respective owners.</p>
+        </div>
+    </footer>
 
-<!-- Push Notification Setup -->
-<script type="application/javascript">
-(function() {
-    window.pn_idzone = 5581206;
-    window.pn_sleep_seconds = 0;
-    window.pn_is_self_hosted = 1;
-    window.pn_soft_ask = 0;
-    window.pn_filename = "/worker.js";
-})();
-</script>
-<script type="application/javascript" src="https://js.wpnsrv.com/pn.php"></script>
-
-<!-- Third Ad (Different provider) -->
-<script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
-<ins class="eas6a97888e31" data-zoneid="5581208" data-keywords="keywords" data-sub="123450000"></ins>
-<script>
-(function() {
-    (window.AdProvider = window.AdProvider || []).push({"serve": {}});
-})() 
-    // Only show ads for Class 0 users
-        document.addEventListener('DOMContentLoaded', function() {
-            // This assumes you have currentPlan variable available globally
-            if (typeof currentPlan !== 'undefined' && currentPlan !== "0") {
-                // Remove ad elements if user is not Class 0
-                const adElements = document.querySelectorAll('.eas6a97888e35');
-                adElements.forEach(el => el.remove());
-            }
-        });;
-</script> 
-    <!-- end of ads-->
-    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+        import { getFirestore, collection, getDocs, doc, getDoc, updateDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDANYS44qmTxUZb40SK50di8XHwaeOiPkM",
             authDomain: "sub-ed-62348.firebaseapp.com",
             projectId: "sub-ed-62348",
-            storageBucket: "sub-ed-62348.firebasestorage.app",
+            storageBucket: "sub-ed-62348.appspot.com",
             messagingSenderId: "133365566054",
             appId: "1:133365566054:web:966a40fe8443d29aabfba7",
             measurementId: "G-MYR2K02YPK"
         };
 
-        try {
-            const app = initializeApp(firebaseConfig);
-            const db = getFirestore(app);
-            const auth = getAuth(app);
-            console.log("Firebase initialized successfully");
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
 
-            const urlParams = new URLSearchParams(window.location.search);
-            const gameId = urlParams.get('game');
-            console.log("Game ID from URL:", gameId);
+        let allGames = [];
+        let currentUser = null;
+        let userEmail = null;
+        let currentPlan = "0";
+        let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        let likedGames = JSON.parse(localStorage.getItem('likedGames')) || {};
 
-            let currentUser = null;
-            let currentPlan = '0'; // Default to free plan
+        // Check auth state and update buttons
+        onAuthStateChanged(auth, async (user) => {
+            const authButtons = document.getElementById('auth-buttons');
+            const signupBtn = document.getElementById('signup-btn');
 
-            // Check auth state
-            onAuthStateChanged(auth, async (user) => {
+            if (user) {
                 currentUser = user;
-                if (user) {
-                    const userDoc = await getDoc(doc(db, "users", user.uid));
-                    if (userDoc.exists()) {
-                        currentPlan = userDoc.data().plan || '0';
+                userEmail = user.email;
+                const userDoc = await getDoc(doc(db, "users", userEmail));
+                if (userDoc.exists()) {
+                    currentPlan = userDoc.data().plan || "0";
+                    if (userDoc.data().likedGames) {
+                        likedGames = userDoc.data().likedGames;
+                        localStorage.setItem('likedGames', JSON.stringify(likedGames));
                     }
+                } else {
+                    currentPlan = "0";
                 }
-                loadGameDetails();
+
+                // Replace Sign Up with Log Out
+                authButtons.innerHTML = `
+                    <button class="login-btn" onclick="window.location.href='plans.html'">Plans</button>
+                    <button class="logout-btn" id="logout-btn">Log Out</button>
+                `;
+                document.getElementById('logout-btn').addEventListener('click', () => {
+                    signOut(auth).then(() => {
+                        window.location.reload();
+                    }).catch((error) => {
+                        console.error("Logout error:", error);
+                        alert("Error logging out: " + error.message);
+                    });
+                });
+            } else {
+                currentUser = null;
+                userEmail = null;
+                currentPlan = "0";
+                authButtons.innerHTML = `
+                    <button class="login-btn" onclick="window.location.href='sign.html'">Login</button>
+                    <button class="signup-btn" id="signup-btn">Sign Up</button>
+                `;
+                document.getElementById('signup-btn').addEventListener('click', () => {
+                    window.location.href = 'sign.html';
+                });
+            }
+            loadGames();
+            updateWishlistCount();
+        });
+
+        // Load all games for store
+        async function loadGames() {
+            const querySnapshot = await getDocs(collection(db, "games"));
+            allGames = [];
+            querySnapshot.forEach((doc) => {
+                const gameData = doc.data();
+                if (!gameData.likes) {
+                    gameData.likes = 0;
+                }
+                allGames.push({ id: doc.id, ...gameData });
+            });
+            filterGames('all');
+        }
+
+        // Check if user has access to a game
+        function checkGameAccess(gameClass) {
+            if (gameClass === "0") return true; // Free games
+            if (!currentUser) return false; // Must be logged in for paid
+            
+            const classValues = { "0": 0, "A": 1, "B": 2, "C": 3 };
+            return classValues[currentPlan] >= classValues[gameClass];
+        }
+
+        // Show access denied message
+        function showAccessDenied() {
+            const deniedBox = document.createElement('div');
+            deniedBox.className = 'access-denied-box';
+            deniedBox.innerHTML = `
+                <div class="access-denied-message">Pay to access this game.</div>
+                <button class="upgrade-button" onclick="window.location.href='plans.html'">Upgrade Plan</button>
+            `;
+            
+            document.body.appendChild(deniedBox);
+            
+            // Auto-close after 10 seconds
+            setTimeout(() => {
+                deniedBox.style.opacity = '0';
+                setTimeout(() => deniedBox.remove(), 500);
+            }, 10000);
+        }
+
+        // Filter games based on class and user's plan
+        function filterGames(gameClass) {
+            const gameGrid = document.getElementById('game-grid');
+            gameGrid.innerHTML = '';
+
+            // Update active category
+            document.querySelectorAll('.category').forEach(cat => {
+                cat.classList.remove('active');
+                if (cat.textContent === 'All Games' && gameClass === 'all') cat.classList.add('active');
+                if (cat.textContent === 'Free' && gameClass === '0') cat.classList.add('active');
+                if (cat.textContent === 'Class A' && gameClass === 'A') cat.classList.add('active');
+                if (cat.textContent === 'Class B' && gameClass === 'B') cat.classList.add('active');
+                if (cat.textContent === 'Class C' && gameClass === 'C') cat.classList.add('active');
             });
 
-            async function loadGameDetails() {
-                if (!gameId) {
-                    console.error("No game ID provided in URL");
-                    document.getElementById('game-title').textContent = "Error: No Game Specified";
-                    document.getElementById('game-description').textContent = "Please return to the store and select a game.";
-                    return;
-                }
+            // Filter games based on category
+            const filteredGames = gameClass === 'all' ? allGames : allGames.filter(game => game.class === gameClass);
 
-                try {
-                    const docRef = doc(db, "games", gameId);
-                    const docSnap = await getDoc(docRef);
+            // Filter based on user's plan
+            const allowedClasses = ["0"]; // Always include Class 0
+            if (currentPlan === "A") allowedClasses.push("A");
+            else if (currentPlan === "B") allowedClasses.push("A", "B");
+            else if (currentPlan === "C") allowedClasses.push("A", "B", "C");
 
-                    if (docSnap.exists()) {
-                        const game = docSnap.data();
-                        console.log("Game data fetched:", game);
+            const displayGames = filteredGames.filter(game => {
+                const gameClassValue = game.class || "0";
+                return allowedClasses.includes(gameClassValue);
+            });
 
-                        document.title = `${game.title} | Berry Games`;
-                        document.getElementById('game-title').textContent = game.title || "Untitled Game";
-                        document.getElementById('game-image').src = game.image || "https://via.placeholder.com/300x400";
-                        document.getElementById('game-image').alt = game.title || "Game Poster";
-                        document.getElementById('game-rating').textContent = game.rating || "N/A";
-                        document.getElementById('game-size').textContent = game.size || "Unknown";
-                        document.getElementById('game-description').textContent = game.description || "No description available.";
+            displayGames.forEach(game => {
+                const isWishlisted = wishlist.some(item => item.id === game.id);
+                const isLiked = likedGames[game.id] || false;
 
-                        // Check access
-                        const gameClass = game.class || '0';
-                        const planOrder = ['0', 'A', 'B', 'C'];
-                        const userPlanIndex = planOrder.indexOf(currentPlan);
-                        const gameClassIndex = planOrder.indexOf(gameClass);
-                        
-                        if (userPlanIndex < gameClassIndex) {
-                            // User doesn't have access
-                            document.getElementById('downloadLinkBtn').style.display = 'none';
-                            document.getElementById('upgrade-prompt').style.display = 'block';
-                        } else {
-                            // User has access
-                            document.getElementById('downloadLinkBtn').style.display = 'inline-flex';
-                            document.getElementById('upgrade-prompt').style.display = 'none';
-                            
-                            // Set Google Drive download link
-                            const downloadLinkBtn = document.getElementById('downloadLinkBtn');
-                            if (game.downloadUrl) {
-                                const directDownloadUrl = game.downloadUrl.replace('/view', '/uc?export=download');
-                                downloadLinkBtn.href = directDownloadUrl;
-                            } else {
-                                downloadLinkBtn.href = "#";
-                                downloadLinkBtn.textContent = "Download Unavailable";
-                                downloadLinkBtn.style.backgroundColor = "#888";
-                                downloadLinkBtn.style.cursor = "not-allowed";
-                            }
-                        }
-
-                        // Display additional images
-                        const additionalImagesDiv = document.getElementById('additional-images');
-                        additionalImagesDiv.innerHTML = '';
-                        if (game.additionalImages && Array.isArray(game.additionalImages) && game.additionalImages.length > 0) {
-                            game.additionalImages.forEach((imageUrl) => {
-                                const img = document.createElement('img');
-                                img.src = imageUrl || "https://via.placeholder.com/150";
-                                img.alt = `${game.title} additional image`;
-                                additionalImagesDiv.appendChild(img);
-                            });
-                        } else {
-                            const noImagesText = document.createElement('p');
-                            noImagesText.textContent = "No additional images available.";
-                            noImagesText.style.color = "#888";
-                            additionalImagesDiv.appendChild(noImagesText);
-                        }
-
-                        // Display YouTube video if available
-                        const youtubeContainer = document.getElementById('youtube-video');
-                        youtubeContainer.innerHTML = '';
-                        if (game.youtubeLink) {
-                            // Extract video ID from URL
-                            let videoId = '';
-                            if (game.youtubeLink.includes('youtube.com/watch?v=')) {
-                                videoId = game.youtubeLink.split('v=')[1].split('&')[0];
-                            } else if (game.youtubeLink.includes('youtu.be/')) {
-                                videoId = game.youtubeLink.split('youtu.be/')[1].split('?')[0];
-                            }
-                            
-                            if (videoId) {
-                                youtubeContainer.innerHTML = `
-                                    <iframe src="https://www.youtube.com/embed/${videoId}" 
-                                            frameborder="0" 
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                            allowfullscreen></iframe>
-                                `;
-                            }
-                        }
-
-                        const minReqList = document.getElementById('min-requirements');
-                        minReqList.innerHTML = '';
-                        if (game.minRequirements) {
-                            for (const [key, value] of Object.entries(game.minRequirements)) {
-                                const li = document.createElement('li');
-                                li.innerHTML = `<span>${key}:</span> <span>${value}</span>`;
-                                minReqList.appendChild(li);
-                            }
-                        } else {
-                            minReqList.innerHTML = '<li>No minimum requirements specified</li>';
-                        }
-
-                        const recReqList = document.getElementById('rec-requirements');
-                        recReqList.innerHTML = '';
-                        if (game.recRequirements) {
-                            for (const [key, value] of Object.entries(game.recRequirements)) {
-                                const li = document.createElement('li');
-                                li.innerHTML = `<span>${key}:</span> <span>${value}</span>`;
-                                recReqList.appendChild(li);
-                            }
-                        } else {
-                            recReqList.innerHTML = '<li>No recommended requirements specified</li>';
-                        }
-                    } else {
-                        console.error("Game not found in Firestore for ID:", gameId);
-                        document.getElementById('game-title').textContent = "Game Not Found";
-                        document.getElementById('game-description').textContent = "This game does not exist in our database. Please return to the store.";
-                        document.getElementById('downloadLinkBtn').href = "#";
-                        document.getElementById('downloadLinkBtn').textContent = "Download Unavailable";
-                        document.getElementById('downloadLinkBtn').style.backgroundColor = "#888";
-                        document.getElementById('downloadLinkBtn').style.cursor = "not-allowed";
-                        document.getElementById('additional-images').innerHTML = '<p style="color: #888;">No additional images available.</p>';
+                const gameCard = document.createElement('div');
+                gameCard.className = 'game-card';
+                gameCard.setAttribute('data-class', game.class || '0');
+                
+                gameCard.innerHTML = `
+                    <img src="${game.image}" alt="${game.title}" class="game-image">
+                    <div class="wishlist-heart ${isWishlisted ? 'active' : ''}" onclick="toggleWishlist('${game.id}', '${game.title}', ${game.price}, '${game.image}'); event.stopPropagation();">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    ${game.likes > 0 ? `
+                    <div class="like-count">
+                        <i class="fas fa-thumbs-up"></i> ${game.likes}
+                    </div>
+                    ` : ''}
+                    <div class="game-info">
+                        <h3 class="game-title">${game.title}</h3>
+                        <div class="rating">${game.rating}</div>
+                        <div class="game-price">
+                            <div>
+                                <span class="price">$${game.price.toFixed(2)}</span>
+                                ${game.originalPrice ? `<span class="original-price">$${game.originalPrice.toFixed(2)}</span>` : ''}
+                                ${game.discount ? `<span class="discount">${game.discount}%</span>` : ''}
+                            </div>
+                            <button class="add-to-cart" onclick="addToCart('${game.title}', ${game.price}); event.stopPropagation();">+</button>
+                        </div>
+                        ${game.class && game.class !== '0' ? `<div class="game-class">Class ${game.class}</div>` : ''}
+                    </div>
+                `;
+                
+                gameCard.onclick = () => {
+                    if (!checkGameAccess(game.class || "0")) {
+                        showAccessDenied();
+                        return;
                     }
-                } catch (error) {
-                    console.error("Error fetching game details:", error);
-                    document.getElementById('game-title').textContent = "Error Loading Game";
-                    document.getElementById('game-description').textContent = "An error occurred while loading the game details. Please try again later.";
-                    document.getElementById('downloadLinkBtn').href = "#";
-                    document.getElementById('downloadLinkBtn').textContent = "Download Unavailable";
-                    document.getElementById('downloadLinkBtn').style.backgroundColor = "#888";
-                    document.getElementById('downloadLinkBtn').style.cursor = "not-allowed";
-                    document.getElementById('additional-images').innerHTML = '<p style="color: #888;">No additional images available.</p>';
-                }
+                    window.location.href = `view.html?game=${game.id}`;
+                };
+
+                gameGrid.appendChild(gameCard);
+            });
+
+            if (displayGames.length === 0) {
+                gameGrid.innerHTML = '<p style="text-align: center; color: #aaa;">No games available for your class.</p>';
+            }
+        }
+
+        // Search functionality
+        function searchGames() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase().trim();
+            const resultsContainer = document.getElementById('search-results');
+            
+            if (searchTerm.length === 0) {
+                resultsContainer.style.display = 'none';
+                return;
             }
 
-            window.onload = loadGameDetails;
-        } catch (error) {
-            console.error("Failed to initialize Firebase:", error);
-            document.body.innerHTML = "<h1 style='text-align: center; color: #FF5722;'>Failed to initialize application. Check console for details.</h1>";
+            const results = allGames.filter(game => {
+                const titleMatch = game.title.toLowerCase().includes(searchTerm);
+                const descMatch = game.description?.toLowerCase().includes(searchTerm) || false;
+                const keywordsMatch = game.keywords?.some(keyword => 
+                    keyword.toLowerCase().includes(searchTerm)
+                ) || false;
+                
+                return titleMatch || descMatch || keywordsMatch;
+            }).slice(0, 5);
+
+            if (results.length > 0) {
+                resultsContainer.innerHTML = results.map(game => `
+                    <div class="search-result-item" onclick="handleSearchResultClick('${game.id}', '${game.class || '0'}')">
+                        <div class="title">${highlightSearchTerm(game.title, searchTerm)}</div>
+                        <div class="description">${highlightSearchTerm(game.description?.substring(0, 100) || '', searchTerm)}...</div>
+                    </div>
+                `).join('');
+                resultsContainer.style.display = 'block';
+            } else {
+                resultsContainer.innerHTML = '<div class="search-result-item">No results found</div>';
+                resultsContainer.style.display = 'block';
+            }
         }
+
+        function handleSearchResultClick(gameId, gameClass) {
+            if (!checkGameAccess(gameClass)) {
+                showAccessDenied();
+                return;
+            }
+            window.location.href = `view.html?game=${gameId}`;
+        }
+
+        function performSearch() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase().trim();
+            if (searchTerm.length === 0) return;
+            
+            document.getElementById('search-results').style.display = 'none';
+            
+            const gameGrid = document.getElementById('game-grid');
+            gameGrid.innerHTML = '';
+            
+            const results = allGames.filter(game => {
+                const titleMatch = game.title.toLowerCase().includes(searchTerm);
+                const descMatch = game.description?.toLowerCase().includes(searchTerm) || false;
+                const keywordsMatch = game.keywords?.some(keyword => 
+                    keyword.toLowerCase().includes(searchTerm)
+                ) || false;
+                
+                return titleMatch || descMatch || keywordsMatch;
+            });
+            
+            if (results.length > 0) {
+                results.forEach(game => {
+                    const isWishlisted = wishlist.some(item => item.id === game.id);
+                    const hasAccess = checkGameAccess(game.class || "0");
+                    
+                    const gameCard = document.createElement('div');
+                    gameCard.className = 'game-card';
+                    gameCard.setAttribute('data-class', game.class || '0');
+                    if (!hasAccess) {
+                        gameCard.style.opacity = '0.7';
+                        gameCard.style.position = 'relative';
+                    }
+                    
+                    gameCard.innerHTML = `
+                        <img src="${game.image}" alt="${game.title}" class="game-image">
+                        ${!hasAccess ? '<i class="fas fa-lock" style="position:absolute; top:10px; right:10px; color:red; font-size:1.5em;"></i>' : ''}
+                        <div class="wishlist-heart ${isWishlisted ? 'active' : ''}" onclick="toggleWishlist('${game.id}', '${game.title}', ${game.price}, '${game.image}'); event.stopPropagation();">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="game-info">
+                            <h3 class="game-title">${highlightSearchTerm(game.title, searchTerm)}</h3>
+                            <div style="font-size: 0.8em; color: #aaa; margin-bottom: 5px;">
+                                ${highlightSearchTerm(game.description?.substring(0, 100) || '', searchTerm)}...
+                            </div>
+                            <div class="game-price">
+                                <div>
+                                    <span class="price">$${game.price.toFixed(2)}</span>
+                                    ${game.originalPrice ? `<span class="original-price">$${game.originalPrice.toFixed(2)}</span>` : ''}
+                                    ${game.discount ? `<span class="discount">${game.discount}%</span>` : ''}
+                                </div>
+                                <button class="add-to-cart" onclick="addToCart('${game.title}', ${game.price}); event.stopPropagation();">+</button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    gameCard.onclick = () => {
+                        if (!hasAccess) {
+                            showAccessDenied();
+                            return;
+                        }
+                        window.location.href = `view.html?game=${game.id}`;
+                    };
+
+                    gameGrid.appendChild(gameCard);
+                });
+            } else {
+                gameGrid.innerHTML = '<p style="text-align: center; color: #aaa;">No games found matching your search.</p>';
+            }
+        }
+
+        function highlightSearchTerm(text, term) {
+            if (!text || !term) return text;
+            const regex = new RegExp(term, 'gi');
+            return text.replace(regex, match => `<span class="search-highlight">${match}</span>`);
+        }
+
+        // Wishlist functions
+        function toggleWishlist(gameId, gameTitle, gamePrice, gameImage) {
+            const index = wishlist.findIndex(item => item.id === gameId);
+            
+            if (index === -1) {
+                // Add to wishlist
+                wishlist.push({ id: gameId, title: gameTitle, price: gamePrice, image: gameImage });
+                event.target.closest('.wishlist-heart').classList.add('active');
+            } else {
+                // Remove from wishlist
+                wishlist.splice(index, 1);
+                event.target.closest('.wishlist-heart').classList.remove('active');
+            }
+            
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            updateWishlistCount();
+            
+            // If wishlist modal is open, update it
+            if (document.getElementById('wishlist-modal').style.display === 'block') {
+                updateWishlistModal();
+            }
+        }
+
+        function updateWishlistCount() {
+            document.querySelector('.wishlist-count').textContent = wishlist.length;
+        }
+
+        function updateWishlistModal() {
+            const wishlistItems = document.getElementById('wishlist-items');
+            
+            if (wishlist.length === 0) {
+                wishlistItems.innerHTML = '<p style="text-align: center; color: #aaa;">Your wishlist is empty</p>';
+                return;
+            }
+
+            let itemsHTML = '';
+            
+            wishlist.forEach(game => {
+                itemsHTML += `
+                    <div style="display: flex; align-items: center; padding: 15px 0; border-bottom: 1px solid #444;">
+                        <img src="${game.image}" alt="${game.title}" style="width: 80px; height: 60px; object-fit: cover; border-radius: 5px; margin-right: 15px;">
+                        <div style="flex-grow: 1;">
+                            <div style="font-weight: bold;">${game.title}</div>
+                            <div style="color: #4CAF50; margin-top: 5px;">$${game.price.toFixed(2)}</div>
+                        </div>
+                        <div>
+                            <button onclick="addToCart('${game.title}', ${game.price})" style="background-color: #4CAF50; border: none; color: white; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-right: 10px;">Add to Cart</button>
+                            <button onclick="toggleWishlist('${game.id}', '${game.title}', ${game.price}, '${game.image}')" style="background-color: #FF5722; border: none; color: white; padding: 8px 15px; border-radius: 5px; cursor: pointer;">Remove</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            wishlistItems.innerHTML = itemsHTML;
+        }
+
+        // Cart functions
+        function addToCart(gameName, price) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push({ name: gameName, price: price });
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert(`${gameName} added to cart!`);
+        }
+
+        function openModal(modalId) {
+            if (modalId === 'wishlist-modal') {
+                updateWishlistModal();
+            }
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Close search results when clicking outside
+        document.addEventListener('click', (event) => {
+            const searchResults = document.getElementById('search-results');
+            const searchInput = document.getElementById('search-input');
+            
+            if (searchResults.style.display === 'block' && 
+                !searchResults.contains(event.target) && 
+                !searchInput.contains(event.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
+
+        // Make functions available globally
+        window.addToCart = addToCart;
+        window.openModal = openModal;
+        window.closeModal = closeModal;
+        window.searchGames = searchGames;
+        window.performSearch = performSearch;
+        window.filterGames = filterGames;
+        window.toggleWishlist = toggleWishlist;
+        window.handleSearchResultClick = handleSearchResultClick;
     </script>
 </body>
 </html>
