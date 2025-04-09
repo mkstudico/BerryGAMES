@@ -396,219 +396,243 @@
         </div>
     </div>
 
+    <!-- Plan Choice Modal -->
+    <div id="plan-choice-modal" class="modal">
+        <div class="modal-content">
+            <h2>Choose Your Next Step</h2>
+            <div class="button-group" style="margin-top: 20px;">
+                <button class="upload-btn" onclick="continueWithCurrentPlan()">Continue with Current Plan</button>
+                <button class="upload-btn" onclick="upgradePlan()">Upgrade Plan</button>
+            </div>
+        </div>
+    </div>
     <!-- Firebase Compatibility Scripts -->
-    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore-compat.js"></script>
 
-    <!-- Firebase Configuration and Logic -->
-    <script>
-        var firebaseConfig = {
-            apiKey: "AIzaSyDANYS44qmTxUZb40SK50di8XHwaeOiPkM",
-            authDomain: "sub-ed-62348.firebaseapp.com",
-            projectId: "sub-ed-62348",
-            storageBucket: "sub-ed-62348.firebasestorage.app",
-            messagingSenderId: "133365566054",
-            appId: "1:133365566054:web:966a40fe8443d29aabfba7",
-            measurementId: "G-MYR2K02YPK"
-        };
+<!-- Firebase Configuration and Logic -->
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyDANYS44qmTxUZb40SK50di8XHwaeOiPkM",
+        authDomain: "sub-ed-62348.firebaseapp.com",
+        projectId: "sub-ed-62348",
+        storageBucket: "sub-ed-62348.firebasestorage.app",
+        messagingSenderId: "133365566054",
+        appId: "1:133365566054:web:966a40fe8443d29aabfba7",
+        measurementId: "G-MYR2K02YPK"
+    };
 
-        firebase.initializeApp(firebaseConfig);
-        var db = firebase.firestore();
-        var auth = firebase.auth();
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+    var auth = firebase.auth();
 
-        var currentUser = null;
-        var userEmail = null;
+    var currentUser = null;
+    var userEmail = null;
 
-        auth.onAuthStateChanged(function(user) {
-            if (user) {
-                currentUser = user;
-                userEmail = user.email; // Get the email from the authenticated user
-                console.log("User authenticated with email:", userEmail);
-            } else {
-                window.location.href = "sign.html"; // Redirect to login if not authenticated
-            }
-        });
-    </script>
-
-    <!-- Regular JavaScript -->
-    <script>
-        var currentPlan = null;
-        var currentAmount = 0;
-        var IMGBB_API_KEY = "b38c0efaadb9866bac80714d41369bad";
-
-        // Show feedback messages (success or error)
-        function showFeedback(message, type) {
-            var feedback = document.getElementById('feedback-message');
-            feedback.textContent = message;
-            feedback.className = 'feedback-message ' + (type === 'success' ? 'success-message' : 'error-message');
-            feedback.style.display = 'block';
-            setTimeout(function() {
-                feedback.style.display = 'none';
-            }, 5000);
+    auth.onAuthStateChanged(function(user) {
+        if (user) {
+            currentUser = user;
+            userEmail = user.email;
+            console.log("User authenticated with UID:", user.uid, "Email:", user.email);
+            // Simply open the modal without fetching the plan
+            openModal('plan-choice-modal');
+        } else {
+            console.log("No user authenticated, redirecting to sign.html");
+            window.location.href = "sign.html"; // Redirect to login if not authenticated
         }
+    });
+</script>
 
-        // Toggle loading state on submit button
-        function showLoading(isLoading) {
-            var submitBtn = document.getElementById('submit-payment');
-            var spinner = submitBtn.querySelector('.spinner');
-            if (isLoading) {
-                submitBtn.disabled = true;
-                submitBtn.textContent = "Saving...";
-                spinner.style.display = 'inline-block';
-            } else {
-                submitBtn.disabled = false;
-                submitBtn.textContent = "Submit Proof";
-                spinner.style.display = 'none';
-            }
+<!-- Regular JavaScript -->
+<script>
+    var currentPlan = null;
+    var currentAmount = 0;
+    var IMGBB_API_KEY = "b38c0efaadb9866bac80714d41369bad";
+
+    // Show feedback messages (success or error)
+    function showFeedback(message, type) {
+        var feedback = document.getElementById('feedback-message');
+        feedback.textContent = message;
+        feedback.className = 'feedback-message ' + (type === 'success' ? 'success-message' : 'error-message');
+        feedback.style.display = 'block';
+        setTimeout(function() {
+            feedback.style.display = 'none';
+        }, 5000);
+    }
+
+    // Toggle loading state on submit button
+    function showLoading(isLoading) {
+        var submitBtn = document.getElementById('submit-payment');
+        var spinner = submitBtn.querySelector('.spinner');
+        if (isLoading) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Saving...";
+            spinner.style.display = 'inline-block';
+        } else {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Submit Proof";
+            spinner.style.display = 'none';
         }
+    }
 
-        // Handle free plan selection
-        function selectPlan(plan) {
-            if (plan === '0') {
-                if (!userEmail) {
-                    showFeedback("User not authenticated. Please log in again.", "error");
-                    return;
-                }
-                showLoading(true);
-                db.collection("users").doc(userEmail).set({
-                    email: userEmail,
-                    plan: "",
-                    paidClasses: "",
-                    paymentProof: []
-                }, { merge: true })
-                .then(function() {
-                    showFeedback("Free plan selected successfully!", "success");
-                    setTimeout(function() {
-                        window.location.href = "index.html";
-                    }, 2000);
-                })
-                .catch(function(error) {
-                    console.error("Error updating free plan:", error);
-                    showFeedback("Error selecting free plan: " + error.message, "error");
-                    showLoading(false);
-                });
-            }
-        }
-
-        // Show payment modal for paid plans
-        function showPaymentModal(plan, amount) {
-            currentPlan = plan;
-            currentAmount = amount;
-            
-            document.getElementById('modal-plan-name').textContent = "Complete Payment for Class " + plan;
-            var paymentNumber = "*182*1*1*0795065789*" + amount + "#";
-            var paymentNumberElement = document.getElementById('payment-number');
-            paymentNumberElement.textContent = paymentNumber;
-            
-            paymentNumberElement.onclick = function() {
-                window.location.href = "tel:" + paymentNumber;
-            };
-            
-            document.getElementById('payment-proof').value = '';
-            document.getElementById('payment-preview').innerHTML = '';
-            document.getElementById('submit-payment').style.display = 'none';
-            document.getElementById('feedback-message').style.display = 'none';
-            
-            document.getElementById('payment-proof').onchange = function(e) {
-                if (e.target.files.length > 0) {
-                    var file = e.target.files[0];
-                    if (!file.type.startsWith('image/')) {
-                        showFeedback("Please select an image file", "error");
-                        return;
-                    }
-                    var reader = new FileReader();
-                    
-                    reader.onload = function(event) {
-                        var preview = document.getElementById('payment-preview');
-                        preview.innerHTML = '<img src="' + event.target.result + '" alt="Payment proof">';
-                        document.getElementById('submit-payment').style.display = 'inline-block';
-                    };
-                    
-                    reader.onerror = function() {
-                        showFeedback("Error reading the image file", "error");
-                    };
-                    
-                    reader.readAsDataURL(file);
-                }
-            };
-            
-            openModal('payment-modal');
-        }
-
-        // Submit payment proof
-        function submitPayment() {
+    // Handle free plan selection
+    function selectPlan(plan) {
+        if (plan === '0') {
             if (!userEmail) {
                 showFeedback("User not authenticated. Please log in again.", "error");
                 return;
             }
-
-            var file = document.getElementById('payment-proof').files[0];
-            if (!file) {
-                showFeedback("Please select a payment proof photo first", "error");
-                return;
-            }
-
             showLoading(true);
-
-            var formData = new FormData();
-            formData.append("image", file);
-            formData.append("key", IMGBB_API_KEY);
-
-            fetch("https://api.imgbb.com/1/upload", {
-                method: "POST",
-                body: formData
-            })
-            .then(function(response) {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok: " + response.statusText);
-                }
-                return response.json();
-            })
-            .then(function(data) {
-                if (data.success) {
-                    // Save the proof in Firestore under the user's email
-                    return db.collection("users").doc(userEmail).set({
-                        email: userEmail,
-                        paymentProof: firebase.firestore.FieldValue.arrayUnion({
-                            url: data.data.url,
-                            plan: currentPlan,
-                            amount: currentAmount,
-                            timestamp: new Date(),
-                            status: "pending"
-                        })
-                    }, { merge: true });
-                } else {
-                    throw new Error(data.error.message || "Failed to upload proof");
-                }
-            })
+            db.collection("users").doc(currentUser.uid).set({
+                email: userEmail,
+                plan: "",
+                paidClasses: "",
+                paymentProof: []
+            }, { merge: true })
             .then(function() {
-                showLoading(false);
-                showFeedback("Payment proof saved successfully! Waiting for admin verification.", "success");
+                showFeedback("Free plan selected successfully!", "success");
                 setTimeout(function() {
-                    closeModal('payment-modal');
+                    window.location.href = "index.html";
                 }, 2000);
             })
             .catch(function(error) {
-                console.error("Payment proof submission error:", error);
+                console.error("Error updating free plan:", error);
+                showFeedback("Error selecting free plan: " + error.message, "error");
                 showLoading(false);
-                showFeedback("Error saving payment proof: " + error.message, "error");
             });
         }
+    }
 
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'block';
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-
-        window.onclick = function(event) {
-            if (event.target.className === 'modal') {
-                event.target.style.display = 'none';
+    // Show payment modal for paid plans
+    function showPaymentModal(plan, amount) {
+        currentPlan = plan;
+        currentAmount = amount;
+        
+        document.getElementById('modal-plan-name').textContent = "Complete Payment for Class " + plan;
+        var paymentNumber = "*182*1*1*0795065789*" + amount + "#";
+        var paymentNumberElement = document.getElementById('payment-number');
+        paymentNumberElement.textContent = paymentNumber;
+        
+        paymentNumberElement.onclick = function() {
+            window.location.href = "tel:" + paymentNumber;
+        };
+        
+        document.getElementById('payment-proof').value = '';
+        document.getElementById('payment-preview').innerHTML = '';
+        document.getElementById('submit-payment').style.display = 'none';
+        document.getElementById('feedback-message').style.display = 'none';
+        
+        document.getElementById('payment-proof').onchange = function(e) {
+            if (e.target.files.length > 0) {
+                var file = e.target.files[0];
+                if (!file.type.startsWith('image/')) {
+                    showFeedback("Please select an image file", "error");
+                    return;
+                }
+                var reader = new FileReader();
+                
+                reader.onload = function(event) {
+                    var preview = document.getElementById('payment-preview');
+                    preview.innerHTML = '<img src="' + event.target.result + '" alt="Payment proof">';
+                    document.getElementById('submit-payment').style.display = 'inline-block';
+                };
+                
+                reader.onerror = function() {
+                    showFeedback("Error reading the image file", "error");
+                };
+                
+                reader.readAsDataURL(file);
             }
         };
-    </script>
+        
+        openModal('payment-modal');
+    }
+
+    // Submit payment proof
+    function submitPayment() {
+        if (!userEmail) {
+            showFeedback("User not authenticated. Please log in again.", "error");
+            return;
+        }
+
+        var file = document.getElementById('payment-proof').files[0];
+        if (!file) {
+            showFeedback("Please select a payment proof photo first", "error");
+            return;
+        }
+
+        showLoading(true);
+
+        var formData = new FormData();
+        formData.append("image", file);
+        formData.append("key", IMGBB_API_KEY);
+
+        fetch("https://api.imgbb.com/1/upload", {
+            method: "POST",
+            body: formData
+        })
+        .then(function(response) {
+            if (!response.ok) {
+                throw new Error("Network response was not ok: " + response.statusText);
+            }
+            return response.json();
+        })
+        .then(function(data) {
+            if (data.success) {
+                // Save the proof in Firestore under the user's UID and update the plan
+                return db.collection("users").doc(currentUser.uid).set({
+                    email: userEmail,
+                    plan: currentPlan, // Update the plan field with the new selection
+                    paymentProof: firebase.firestore.FieldValue.arrayUnion({
+                        url: data.data.url,
+                        plan: currentPlan,
+                        amount: currentAmount,
+                        timestamp: new Date(),
+                        status: "pending"
+                    })
+                }, { merge: true });
+            } else {
+                throw new Error(data.error.message || "Failed to upload proof");
+            }
+        })
+        .then(function() {
+            showLoading(false);
+            showFeedback("Payment proof saved successfully! Waiting for admin verification.", "success");
+            setTimeout(function() {
+                closeModal('payment-modal');
+            }, 2000);
+        })
+        .catch(function(error) {
+            console.error("Payment proof submission error:", error);
+            showLoading(false);
+            showFeedback("Error saving payment proof: " + error.message, "error");
+        });
+    }
+
+    function openModal(modalId) {
+        document.getElementById(modalId).style.display = 'block';
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
+
+    function continueWithCurrentPlan() {
+        closeModal('plan-choice-modal');
+        window.location.href = "index.html";
+    }
+
+    function upgradePlan() {
+        closeModal('plan-choice-modal');
+        // Plan grid is already visible, so no further action needed
+    }
+
+    window.onclick = function(event) {
+        if (event.target.className === 'modal') {
+            event.target.style.display = 'none';
+        }
+    };
+</script>
 </body>
 </html>
