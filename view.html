@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Details | Berry Games</title>
+    <meta http-equiv="Delegate-CH" content="Sec-CH-UA https://s.magsrv.com; Sec-CH-UA-Mobile https://s.magsrv.com; Sec-CH-UA-Arch https://s.magsrv.com; Sec-CH-UA-Model https://s.magsrv.com; Sec-CH-UA-Platform https://s.magsrv.com; Sec-CH-UA-Platform-Version https://s.magsrv.com; Sec-CH-UA-Bitness https://s.magsrv.com; Sec-CH-UA-Full-Version-List https://s.magsrv.com; Sec-CH-UA-Full-Version https://s.magsrv.com;">
+    <meta http-equiv="Delegate-CH" content="Sec-CH-UA https://s.magsrv.com https://5581206.notify6.com; Sec-CH-UA-Mobile https://s.magsrv.com https://5581206.notify6.com; Sec-CH-UA-Arch https://s.magsrv.com https://5581206.notify6.com; Sec-CH-UA-Model https://s.magsrv.com https://5581206.notify6.com; Sec-CH-UA-Platform https://s.magsrv.com https://5581206.notify6.com; Sec-CH-UA-Platform-Version https://s.magsrv.com https://5581206.notify6.com; Sec-CH-UA-Bitness https://s.magsrv.com https://5581206.notify6.com; Sec-CH-UA-Full-Version-List https://s.magsrv.com https://5581206.notify6.com; Sec-CH-UA-Full-Version https://s.magsrv.com https://5581206.notify6.com;">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -300,7 +302,56 @@
             </div>
         </div>
     </div>
+    
+   <!-- First Ad -->
+<script async type="application/javascript" src="https://a.pemsrv.com/ad-provider.js"></script>
+<ins class="eas6a97888e35" data-zoneid="5581196" data-keywords="keywords" data-sub="123450000"></ins>
+<script>
+(function() {
+    (window.AdProvider = window.AdProvider || []).push({"serve": {}});
+})();
+</script>
 
+<!-- Second Ad -->
+<script async type="application/javascript" src="https://a.pemsrv.com/ad-provider.js"></script>
+<ins class="eas6a97888e33" data-zoneid="5581202" data-keywords="keywords" data-sub="123450000"></ins>
+<script>
+(function() {
+    (window.AdProvider = window.AdProvider || []).push({"serve": {}});
+})();
+</script>
+
+<!-- Push Notification Setup -->
+<script type="application/javascript">
+(function() {
+    window.pn_idzone = 5581206;
+    window.pn_sleep_seconds = 0;
+    window.pn_is_self_hosted = 1;
+    window.pn_soft_ask = 0;
+    window.pn_filename = "/worker.js";
+})();
+</script>
+<script type="application/javascript" src="https://js.wpnsrv.com/pn.php"></script>
+
+<!-- Third Ad (Different provider) -->
+<script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
+<ins class="eas6a97888e31" data-zoneid="5581208" data-keywords="keywords" data-sub="123450000"></ins>
+<script>
+(function() {
+    (window.AdProvider = window.AdProvider || []).push({"serve": {}});
+})() 
+    // Only show ads for Class 0 users
+        document.addEventListener('DOMContentLoaded', function() {
+            // This assumes you have currentPlan variable available globally
+            if (typeof currentPlan !== 'undefined' && currentPlan !== "0") {
+                // Remove ad elements if user is not Class 0
+                const adElements = document.querySelectorAll('.eas6a97888e35');
+                adElements.forEach(el => el.remove());
+            }
+        });;
+</script> 
+    <!-- end of ads-->
+    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
         import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
