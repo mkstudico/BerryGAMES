@@ -6,9 +6,9 @@
     <title>Game Details | Berry Games</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
     <style>
         body {
             margin: 0;
@@ -80,17 +80,18 @@
             border-radius: 5px;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
         }
-        
-        .youtube-preview {
+
+        /* Added YouTube video container styles */
+        .youtube-video-container {
             margin-top: 20px;
-        }
-        
-        .youtube-preview iframe {
             width: 100%;
-            max-width: 560px;
-            height: 315px;
-            border-radius: 5px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .youtube-video-container iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+            border-radius: 8px;
         }
         
         .game-details {
@@ -239,9 +240,10 @@
             .additional-images img {
                 max-width: 100px;
             }
-            
-            .youtube-preview iframe {
-                max-width: 100%;
+
+            /* Responsive YouTube video */
+            .youtube-video-container iframe {
+                height: 250px;
             }
         }
     </style>
@@ -259,7 +261,8 @@
         <div class="game-poster">
             <img id="game-image" src="" alt="Game Poster">
             <div class="additional-images" id="additional-images"></div>
-            <div class="youtube-preview" id="youtube-preview"></div>
+            <!-- Added YouTube video container -->
+            <div class="youtube-video-container" id="youtube-video"></div>
         </div>
         
         <div class="game-details">
@@ -313,20 +316,12 @@
             measurementId: "G-MYR2K02YPK"
         };
 
-        let db, auth;
-
         try {
             const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
+            const db = getFirestore(app);
+            const auth = getAuth(app);
             console.log("Firebase initialized successfully");
-        } catch (error) {
-            console.error("Failed to initialize Firebase:", error);
-            document.body.innerHTML = "<h1 style='text-align: center; color: #FF5722;'>Failed to initialize application. Check console for details.</h1>";
-            throw error;
-        }
 
-        document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const gameId = urlParams.get('game');
             console.log("Game ID from URL:", gameId);
@@ -334,169 +329,158 @@
             let currentUser = null;
             let currentPlan = '0'; // Default to free plan
 
+            // Check auth state
             onAuthStateChanged(auth, async (user) => {
                 currentUser = user;
                 if (user) {
-                    try {
-                        const userDoc = await getDoc(doc(db, "users", user.uid));
-                        if (userDoc.exists()) {
-                            currentPlan = userDoc.data().plan || '0';
-                        } else {
-                            console.warn("User document not found, defaulting to free plan.");
-                        }
-                    } catch (error) {
-                        console.error("Error fetching user data:", error);
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    if (userDoc.exists()) {
+                        currentPlan = userDoc.data().plan || '0';
                     }
                 }
-                loadGameDetails(gameId);
-            }, (error) => {
-                console.error("Auth state change error:", error);
-                loadGameDetails(gameId); // Load without auth if auth fails
+                loadGameDetails();
             });
-        });
 
-        async function loadGameDetails(gameId) {
-            if (!gameId) {
-                console.error("No game ID provided in URL");
-                updateErrorState("Error: No Game Specified. Please return to the store and select a game.");
-                return;
-            }
-
-            try {
-                const docRef = doc(db, "games", gameId);
-                const docSnap = await getDoc(docRef);
-
-                if (!docSnap.exists()) {
-                    console.error("Game not found in Firestore for ID:", gameId);
-                    updateErrorState("Error: Game not found. Please return to the store.");
+            async function loadGameDetails() {
+                if (!gameId) {
+                    console.error("No game ID provided in URL");
+                    document.getElementById('game-title').textContent = "Error: No Game Specified";
+                    document.getElementById('game-description').textContent = "Please return to the store and select a game.";
                     return;
                 }
 
-                const game = docSnap.data();
-                console.log("Game data fetched:", game);
+                try {
+                    const docRef = doc(db, "games", gameId);
+                    const docSnap = await getDoc(docRef);
 
-                document.title = `${game.title || "Untitled Game"} | Berry Games`;
-                document.getElementById('game-title').textContent = game.title || "Untitled Game";
-                document.getElementById('game-image').src = game.image || "https://via.placeholder.com/300x400";
-                document.getElementById('game-image').alt = game.title || "Game Poster";
-                document.getElementById('game-rating').textContent = game.rating || "N/A";
-                document.getElementById('game-size').textContent = game.size || "Unknown";
-                document.getElementById('game-description').textContent = game.description || "No description available.";
+                    if (docSnap.exists()) {
+                        const game = docSnap.data();
+                        console.log("Game data fetched:", game);
 
-                // Check access
-                const gameClass = game.class || '0';
-                const planOrder = ['0', 'A', 'B', 'C'];
-                const userPlanIndex = planOrder.indexOf(currentPlan);
-                const gameClassIndex = planOrder.indexOf(gameClass);
+                        document.title = `${game.title} | Berry Games`;
+                        document.getElementById('game-title').textContent = game.title || "Untitled Game";
+                        document.getElementById('game-image').src = game.image || "https://via.placeholder.com/300x400";
+                        document.getElementById('game-image').alt = game.title || "Game Poster";
+                        document.getElementById('game-rating').textContent = game.rating || "N/A";
+                        document.getElementById('game-size').textContent = game.size || "Unknown";
+                        document.getElementById('game-description').textContent = game.description || "No description available.";
 
-                const downloadLinkBtn = document.getElementById('downloadLinkBtn');
-                const upgradePrompt = document.getElementById('upgrade-prompt');
+                        // Check access
+                        const gameClass = game.class || '0';
+                        const planOrder = ['0', 'A', 'B', 'C'];
+                        const userPlanIndex = planOrder.indexOf(currentPlan);
+                        const gameClassIndex = planOrder.indexOf(gameClass);
+                        
+                        if (userPlanIndex < gameClassIndex) {
+                            // User doesn't have access
+                            document.getElementById('downloadLinkBtn').style.display = 'none';
+                            document.getElementById('upgrade-prompt').style.display = 'block';
+                        } else {
+                            // User has access
+                            document.getElementById('downloadLinkBtn').style.display = 'inline-flex';
+                            document.getElementById('upgrade-prompt').style.display = 'none';
+                            
+                            // Set Google Drive download link
+                            const downloadLinkBtn = document.getElementById('downloadLinkBtn');
+                            if (game.downloadUrl) {
+                                const directDownloadUrl = game.downloadUrl.replace('/view', '/uc?export=download');
+                                downloadLinkBtn.href = directDownloadUrl;
+                            } else {
+                                downloadLinkBtn.href = "#";
+                                downloadLinkBtn.textContent = "Download Unavailable";
+                                downloadLinkBtn.style.backgroundColor = "#888";
+                                downloadLinkBtn.style.cursor = "not-allowed";
+                            }
+                        }
 
-                if (userPlanIndex < gameClassIndex) {
-                    // User doesn't have access
-                    downloadLinkBtn.style.display = 'none';
-                    upgradePrompt.style.display = 'block';
-                } else {
-                    // User has access
-                    downloadLinkBtn.style.display = 'inline-flex';
-                    upgradePrompt.style.display = 'none';
+                        // Display additional images
+                        const additionalImagesDiv = document.getElementById('additional-images');
+                        additionalImagesDiv.innerHTML = '';
+                        if (game.additionalImages && Array.isArray(game.additionalImages) && game.additionalImages.length > 0) {
+                            game.additionalImages.forEach((imageUrl) => {
+                                const img = document.createElement('img');
+                                img.src = imageUrl || "https://via.placeholder.com/150";
+                                img.alt = `${game.title} additional image`;
+                                additionalImagesDiv.appendChild(img);
+                            });
+                        } else {
+                            const noImagesText = document.createElement('p');
+                            noImagesText.textContent = "No additional images available.";
+                            noImagesText.style.color = "#888";
+                            additionalImagesDiv.appendChild(noImagesText);
+                        }
 
-                    if (game.downloadUrl) {
-                        const directDownloadUrl = game.downloadUrl.replace('/view', '/uc?export=download');
-                        downloadLinkBtn.href = directDownloadUrl;
+                        // Display YouTube video if available
+                        const youtubeContainer = document.getElementById('youtube-video');
+                        youtubeContainer.innerHTML = '';
+                        if (game.youtubeLink) {
+                            // Extract video ID from URL
+                            let videoId = '';
+                            if (game.youtubeLink.includes('youtube.com/watch?v=')) {
+                                videoId = game.youtubeLink.split('v=')[1].split('&')[0];
+                            } else if (game.youtubeLink.includes('youtu.be/')) {
+                                videoId = game.youtubeLink.split('youtu.be/')[1].split('?')[0];
+                            }
+                            
+                            if (videoId) {
+                                youtubeContainer.innerHTML = `
+                                    <iframe src="https://www.youtube.com/embed/${videoId}" 
+                                            frameborder="0" 
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                            allowfullscreen></iframe>
+                                `;
+                            }
+                        }
+
+                        const minReqList = document.getElementById('min-requirements');
+                        minReqList.innerHTML = '';
+                        if (game.minRequirements) {
+                            for (const [key, value] of Object.entries(game.minRequirements)) {
+                                const li = document.createElement('li');
+                                li.innerHTML = `<span>${key}:</span> <span>${value}</span>`;
+                                minReqList.appendChild(li);
+                            }
+                        } else {
+                            minReqList.innerHTML = '<li>No minimum requirements specified</li>';
+                        }
+
+                        const recReqList = document.getElementById('rec-requirements');
+                        recReqList.innerHTML = '';
+                        if (game.recRequirements) {
+                            for (const [key, value] of Object.entries(game.recRequirements)) {
+                                const li = document.createElement('li');
+                                li.innerHTML = `<span>${key}:</span> <span>${value}</span>`;
+                                recReqList.appendChild(li);
+                            }
+                        } else {
+                            recReqList.innerHTML = '<li>No recommended requirements specified</li>';
+                        }
                     } else {
-                        downloadLinkBtn.href = "#";
-                        downloadLinkBtn.textContent = "Download Unavailable";
-                        downloadLinkBtn.style.backgroundColor = "#888";
-                        downloadLinkBtn.style.cursor = "not-allowed";
+                        console.error("Game not found in Firestore for ID:", gameId);
+                        document.getElementById('game-title').textContent = "Game Not Found";
+                        document.getElementById('game-description').textContent = "This game does not exist in our database. Please return to the store.";
+                        document.getElementById('downloadLinkBtn').href = "#";
+                        document.getElementById('downloadLinkBtn').textContent = "Download Unavailable";
+                        document.getElementById('downloadLinkBtn').style.backgroundColor = "#888";
+                        document.getElementById('downloadLinkBtn').style.cursor = "not-allowed";
+                        document.getElementById('additional-images').innerHTML = '<p style="color: #888;">No additional images available.</p>';
                     }
+                } catch (error) {
+                    console.error("Error fetching game details:", error);
+                    document.getElementById('game-title').textContent = "Error Loading Game";
+                    document.getElementById('game-description').textContent = "An error occurred while loading the game details. Please try again later.";
+                    document.getElementById('downloadLinkBtn').href = "#";
+                    document.getElementById('downloadLinkBtn').textContent = "Download Unavailable";
+                    document.getElementById('downloadLinkBtn').style.backgroundColor = "#888";
+                    document.getElementById('downloadLinkBtn').style.cursor = "not-allowed";
+                    document.getElementById('additional-images').innerHTML = '<p style="color: #888;">No additional images available.</p>';
                 }
-
-                // Display additional images
-                const additionalImagesDiv = document.getElementById('additional-images');
-                additionalImagesDiv.innerHTML = '';
-                if (game.additionalImages && Array.isArray(game.additionalImages) && game.additionalImages.length > 0) {
-                    game.additionalImages.forEach((imageUrl) => {
-                        const img = document.createElement('img');
-                        img.src = imageUrl || "https://via.placeholder.com/150";
-                        img.alt = `${game.title} additional image`;
-                        img.onerror = () => img.src = "https://via.placeholder.com/150"; // Fallback
-                        additionalImagesDiv.appendChild(img);
-                    });
-                } else {
-                    additionalImagesDiv.innerHTML = '<p style="color: #888;">No additional images available.</p>';
-                }
-
-                // Display YouTube video
-                const youtubePreview = document.getElementById('youtube-preview');
-                youtubePreview.innerHTML = '';
-
-                if (game.youtubeLink) {
-                    const youtubeEmbedUrl = game.youtubeLink.includes('youtu.be') 
-                        ? game.youtubeLink.replace('youtu.be/', 'www.youtube.com/embed/') 
-                        : game.youtubeLink.replace('watch?v=', 'embed/');
-
-                    const iframe = document.createElement('iframe');
-                    iframe.width = "100%";
-                    iframe.height = "315";
-                    iframe.src = youtubeEmbedUrl;
-                    iframe.title = "YouTube video player";
-                    iframe.frameborder = "0";
-                    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-                    iframe.allowfullscreen = true;
-                    youtubePreview.appendChild(iframe);
-                } else {
-                    youtubePreview.textContent = "No YouTube video available.";
-                    youtubePreview.style.color = "#888";
-                }
-
-                // Display system requirements
-                const minReqList = document.getElementById('min-requirements');
-                const recReqList = document.getElementById('rec-requirements');
-
-                minReqList.innerHTML = '';
-                if (game.minRequirements) {
-                    for (const [key, value] of Object.entries(game.minRequirements)) {
-                        const li = document.createElement('li');
-                        li.innerHTML = `<span>${key}:</span> <span>${value}</span>`;
-                        minReqList.appendChild(li);
-                    }
-                } else {
-                    minReqList.innerHTML = '<li>No minimum requirements specified</li>';
-                }
-
-                recReqList.innerHTML = '';
-                if (game.recRequirements) {
-                    for (const [key, value] of Object.entries(game.recRequirements)) {
-                        const li = document.createElement('li');
-                        li.innerHTML = `<span>${key}:</span> <span>${value}</span>`;
-                        recReqList.appendChild(li);
-                    }
-                } else {
-                    recReqList.innerHTML = '<li>No recommended requirements specified</li>';
-                }
-
-            } catch (error) {
-                console.error("Error loading game details:", error);
-                updateErrorState("Error: Failed to load game details. Please try again later.");
             }
-        }
 
-        function updateErrorState(message) {
-            document.getElementById('game-title').textColor = "#FF5722";
-            document.getElementById('game-title').textContent = message;
-            document.getElementById('game-description').textContent = "";
-            document.getElementById('game-image').src = "https://via.placeholder.com/300x400";
-            document.getElementById('game-image').alt = "Error Loading Image";
-            document.getElementById('game-rating').textContent = "N/A";
-            document.getElementById('game-size').textContent = "N/A";
-            document.getElementById('additional-images').innerHTML = '<p style="color: #888;">No additional images available.</p>';
-            document.getElementById('youtube-preview').textContent = "No YouTube video available.";
-            document.getElementById('youtube-preview').style.color = "#888";
-            document.getElementById('downloadLinkBtn').style.display = 'none';
-            document.getElementById('upgrade-prompt').style.display = 'none';
-            document.getElementById('min-requirements').innerHTML = '<li>Error loading requirements</li>';
-            document.getElementById('rec-requirements').innerHTML = '<li>Error loading requirements</li>';
+            window.onload = loadGameDetails;
+        } catch (error) {
+            console.error("Failed to initialize Firebase:", error);
+            document.body.innerHTML = "<h1 style='text-align: center; color: #FF5722;'>Failed to initialize application. Check console for details.</h1>";
         }
     </script>
 </body>
